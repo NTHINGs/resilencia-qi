@@ -64,7 +64,7 @@ function resiliencia_qi_init() {
 }
 
 // Crear Tablas en MySql
-function create_plugin_database() {
+function resilencia_qi_create_plugin_database() {
     global $table_prefix, $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "resiliencia_", $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
@@ -73,7 +73,7 @@ function create_plugin_database() {
 
 	add_role( 'empresa', 'Empresa', array( 'read' => true ) );
 }
-register_activation_hook( __FILE__, 'create_plugin_database' );
+register_activation_hook( __FILE__, 'resilencia_qi_create_plugin_database' );
 
 
 // Creando Página en dashboard
