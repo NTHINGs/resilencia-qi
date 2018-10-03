@@ -93,7 +93,8 @@ function render_resilencia_qi_admin() {
     global $title;
 
     print '<div class="wrap">';
-    print "<h1>$title</h1>";
+	print "<h1>$title</h1>";
+	print do_shortcode('[formulario-registro-empresa]');
 
     $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
 
