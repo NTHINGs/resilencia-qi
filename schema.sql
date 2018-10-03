@@ -16,7 +16,7 @@ CREATE TABLE %TABLE_PREFIX%preguntas
  tipo     CHAR NOT NULL ,
  grupo    VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (id),
+PRIMARY KEY (id)
 )%CHARSET_COLLATE%;
 
 

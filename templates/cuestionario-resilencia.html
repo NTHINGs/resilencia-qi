@@ -2,48 +2,48 @@
 <!-- REQUEST_URI = URL para guardar al paciente -->
 <!-- PREGUNTAS = JSON STRING CON LAS PREGUNTAS -->
 <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <form class="row" action="%REQUEST_URI%" method="POST">
-                    <div class="form-group col-12">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="fechadenacimiento">Fecha de Nacimiento</label>
-                        <input id="fechadenacimiento" name="fechadenacimiento"/ required>
-                    </div>
-                    <div class="col-12">
-                        <span>Edad:
-                            <span id="edad-span"></span>
-                        </span>
-                        <input type="hidden" id="edad" name="edad">
-                    </div>
-                    <!-- TODO: AGREGAR PREGUNTAS -->
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
-                    </div>
-                </form>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <form class="row" action="%REQUEST_URI%" method="POST">
+                <div class="form-group col-12">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="fechadenacimiento">Fecha de Nacimiento</label>
+                    <input id="fechadenacimiento" name="fechadenacimiento" / required>
+                </div>
+                <div class="col-12">
+                    <span>Edad:
+                        <span id="edad-span"></span>
+                    </span>
+                    <input type="hidden" id="edad" name="edad">
+                </div>
+                <!-- TODO: AGREGAR PREGUNTAS -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <script>
-        jQuery(document).ready(function( $ ) {
-            var preguntas = JSON.parse('%PREGUNTAS%');
-            console.log(preguntas);
-            $('#fechadenacimiento').datepicker({
-                uiLibrary: 'bootstrap4',
-                format: 'yyyy-mm-dd'
-            });
-    
-            $('#fechadenacimiento').change(function() {
-                let nacimiento = new Date($(this).val());
-                let diferenciaMs = new Date(Date.now() - nacimiento.getTime());
-                let edad = Math.abs(diferenciaMs.getUTCFullYear() - 1970);
-    
-                $('#edad').val(edad);
-                $('#edad-span').html(edad);
-            });
+</div>
+
+<script>
+    jQuery(document).ready(function ($) {
+        var preguntas = JSON.parse('%PREGUNTAS%');
+        console.log(preguntas);
+        $('#fechadenacimiento').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd'
         });
-    </script>
+
+        $('#fechadenacimiento').change(function () {
+            let nacimiento = new Date($(this).val());
+            let diferenciaMs = new Date(Date.now() - nacimiento.getTime());
+            let edad = Math.abs(diferenciaMs.getUTCFullYear() - 1970);
+
+            $('#edad').val(edad);
+            $('#edad-span').html(edad);
+        });
+    });
+</script>
