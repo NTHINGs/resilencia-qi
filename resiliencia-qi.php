@@ -81,7 +81,7 @@ function resiliencia_qi_admin() {
 function render_resiliencia_qi_admin() {
 	global $title;
 	$current_user = wp_get_current_user();
-	$link = array_pop(explode('/', $current_user->hash));
+	$link = get_user_meta($current_user->ID, 'hash', true);
 	
 	$variables = array(
 		"%TITLE%",
