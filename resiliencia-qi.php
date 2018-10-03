@@ -95,6 +95,7 @@ function render_resilencia_qi_admin() {
     print '<div class="wrap">';
 	print "<h1>$title</h1>";
 	print do_shortcode('[formulario-registro-empresa]');
+	print ABS_DIR . '/shortcodes/frm-rgst-empr.php';
 
     $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
 
