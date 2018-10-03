@@ -37,8 +37,8 @@ if ( ! defined( 'ABS_DIR_RESILENCIA' ) ) {
 	define( 'ABS_DIR_RESILENCIA', WP_PLUGIN_DIR . '/' . ABS_NAME_RESILENCIA );
 }
 
-if ( ! defined( 'ABS_URL' ) ) {
-	define( 'ABS_URL', WP_PLUGIN_URL . '/' . ABS_NAME_RESILENCIA );
+if ( ! defined( 'ABS_URL_resilencia' ) ) {
+	define( 'ABS_URL_resilencia', WP_PLUGIN_URL . '/' . ABS_NAME_RESILENCIA );
 }
 
 /**
@@ -57,10 +57,6 @@ function resiliencia_qi_init() {
 	wp_enqueue_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array(), null, true);
 	wp_register_script( 'popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ), '3.3.1', false );
 	wp_enqueue_script( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array( 'jquery', 'popper' ), '3.3.1', false );
-	wp_enqueue_script( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js', array( 'jquery' ), '3.3.1', false );
-	wp_enqueue_style( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css');
-    wp_register_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
-	wp_register_script( 'resiliencia_qi', plugins_url( '/js/resiliencia_qi.js', __FILE__ ));
 }
 
 // Crear Tablas en MySql
