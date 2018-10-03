@@ -79,15 +79,17 @@ function resilencia_qi_admin() {
     );
 }
 function render_resilencia_qi_admin() {
-    global $title;
-
-    print '<div class="wrap">';
-	print "<h1>$title</h1>";
-
-    $file = RES_PLUGIN_PATH . "templates/admin.html";
-
-    if ( file_exists( $file ) )
-        require $file;
-
-    print '</div>';
+	global $title;
+	$current_user = wp_get_current_user();
+	$link = array_pop(explode('/', $current_user->user_url));
+	
+	$variables = array(
+		"%TITLE%",
+		"%LINK%",
+	);
+	$values = array(
+		$title,
+		$link
+	);
+	print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/admin.html" ));
 }
