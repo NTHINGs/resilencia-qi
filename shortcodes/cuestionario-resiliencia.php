@@ -54,7 +54,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
         if ( isset( $_POST['submitted'] ) ) {
             global $wpdb;
 
-            $table_name = $wpdb->prefix . "factores_resiliencia";
+            $table_name = $wpdb->prefix . "resiliencia_registros";
             $values = array(
                 'nombre'             => $_POST['nombre'],
                 'fechadenacimiento'  => date('Y-m-d', strtotime($_POST['fechadenacimiento'])),
@@ -69,7 +69,24 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 '%s',
             ));
 
-            $respuestas = array();
+            $cuestionario = $wpdb->insert_id;
+
+            $resultados_table_name = $wpdb->prefix . "resiliencia_resultados";
+            for ($q = 1; $q <= 48; $q++){
+                if (isset($_POST["pregunta_" . $q])){
+                    $respuesta = array(
+                        'respuesta'    => $_POST["pregunta_" . $q],
+                        'pregunta'     => $q,
+                        'cuestionario' => $cuestionario,
+                    );
+
+                    $wpdb->insert( $resultados_table_name, $respuesta, array(
+                        '%s',
+                        '%d',
+                        '%d',
+                    ));
+                }
+            }
             echo 'Formulario enviado correctamente';
         }
     }
