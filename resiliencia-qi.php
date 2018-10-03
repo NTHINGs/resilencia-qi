@@ -96,7 +96,7 @@ function render_resilencia_qi_admin() {
 	print "<h1>$title</h1>";
 	print do_shortcode('[formulario-registro-empresa]');
 	
-	if ( shortcode_exists( 'formulario-registro-empresa' ) ) {
+	if ( !shortcode_exists( 'formulario-registro-empresa' ) ) {
 		print 'ESTOY EN EL IF';
 	}
 
