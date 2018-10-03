@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Resiliencia QI
  * Plugin URI:        https://github.com/NTHINGs/resiliencia-qi
- * Description:       Plugin hecho a la medida para manejar el cuestionario de resilencia del Instituto QI.
+ * Description:       Plugin hecho a la medida para manejar el cuestionario de resiliencia del Instituto QI.
  * Version:           1.0.0
  * Author:            Mauricio Martinez, Fernando Alvarez
  * Author URI:        https://github.com/NTHINGs
@@ -25,8 +25,8 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 1.0.0
  */
 // Plugin version.
-if ( ! defined( 'ABS_VERSION_RESILENCIA' ) ) {
-	define( 'ABS_VERSION_RESILENCIA', '1.0.0' );
+if ( ! defined( 'ABS_VERSION_RESILiENCIA' ) ) {
+	define( 'ABS_VERSION_RESILiENCIA', '1.0.0' );
 }
 if ( ! defined( 'RES_PLUGIN_PATH' ) ) {
 	define( 'RES_PLUGIN_PATH',  plugin_dir_path( __FILE__ ) );
@@ -53,32 +53,32 @@ function resiliencia_qi_init() {
 }
 
 // Crear Tablas en MySql
-function resilencia_qi_create_plugin_database() {
+function resiliencia_qi_create_plugin_database() {
     global $table_prefix, $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "resiliencia_", $charset_collate), file_get_contents( RES_PLUGIN_PATH . "/schema.sql" ));
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	// dbDelta($sql);
 
-	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resilencia'=> true ) );
+	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resiliencia'=> true ) );
 }
-register_activation_hook( __FILE__, 'resilencia_qi_create_plugin_database' );
+register_activation_hook( __FILE__, 'resiliencia_qi_create_plugin_database' );
 
 
 // Creando Página en dashboard
-add_action( 'admin_menu', 'resilencia_qi_admin' );
+add_action( 'admin_menu', 'resiliencia_qi_admin' );
 
-function resilencia_qi_admin() {
+function resiliencia_qi_admin() {
     add_menu_page(
         'Cuestionario Resiliencia',     // page title
         'Cuestionario Resiliencia',     // menu title
-        'resilencia',   // capability
+        'resiliencia',   // capability
         'cuestionario-resiliencia',     // menu slug
-		'render_resilencia_qi_admin', // callback function
+		'render_resiliencia_qi_admin', // callback function
 		'dashicons-universal-access'
     );
 }
-function render_resilencia_qi_admin() {
+function render_resiliencia_qi_admin() {
 	global $title;
 	$current_user = wp_get_current_user();
 	$link = array_pop(explode('/', $current_user->user_url));
