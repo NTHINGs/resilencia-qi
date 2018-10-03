@@ -6,7 +6,7 @@ DROP TABLE %TABLE_PREFIX%resultados;
 DROP TABLE %TABLE_PREFIX%preguntas;
 
 
-DROP TABLE %TABLE_PREFIX%registro;
+DROP TABLE %TABLE_PREFIX%registros;
 -- ************************************** %TABLE_PREFIX%preguntas
 
 CREATE TABLE %TABLE_PREFIX%preguntas
@@ -20,9 +20,9 @@ PRIMARY KEY (id)
 )%CHARSET_COLLATE%;
 
 
--- ************************************** %TABLE_PREFIX%registro
+-- ************************************** %TABLE_PREFIX%registros
 
-CREATE TABLE %TABLE_PREFIX%registro
+CREATE TABLE %TABLE_PREFIX%registros
 (
  id                INT NOT NULL AUTO_INCREMENT,
  nombre            VARCHAR(100) NOT NULL ,
@@ -47,5 +47,5 @@ PRIMARY KEY (id),
 KEY fkIdx_19 (pregunta),
 CONSTRAINT FK_19 FOREIGN KEY fkIdx_19 (pregunta) REFERENCES %TABLE_PREFIX%preguntas (id) ON DELETE CASCADE ON UPDATE CASCADE,
 KEY fkIdx_22 (cuestionario),
-CONSTRAINT FK_22 FOREIGN KEY fkIdx_22 (cuestionario) REFERENCES %TABLE_PREFIX%registro (id) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT FK_22 FOREIGN KEY fkIdx_22 (cuestionario) REFERENCES %TABLE_PREFIX%registros (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;
