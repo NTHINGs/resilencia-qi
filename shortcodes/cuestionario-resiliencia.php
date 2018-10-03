@@ -67,6 +67,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 '%s',
                 '%d',
                 '%s',
+                '%s',
             ));
 
             $cuestionario = $wpdb->insert_id;
