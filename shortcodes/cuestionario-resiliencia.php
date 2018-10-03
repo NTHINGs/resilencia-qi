@@ -29,7 +29,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
     
     function render_html_form_cuestionario() {
 
-        if (isset($_GET['org_id'])) {
+        if (!isset($_GET['org_id'])) {
             echo 'LINK DE ORGANIZACION INCORRECTO';
         }
         global $wpdb;
