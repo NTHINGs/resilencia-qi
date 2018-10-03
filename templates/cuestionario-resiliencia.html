@@ -34,18 +34,16 @@
         var preguntas = JSON.parse('%PREGUNTAS%');
         preguntas.forEach(function (pregunta) {
             var div = '\
-            <div class="form-group col-12"> \
-                <div class="col-8">\
-                    <label for="pregunta_' + pregunta.id + '">' + pregunta.pregunta + '</label> \
-                </div>\
-                <div class="col-2 form-check form-check-inline">\
-                    <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_si" value="S">\
-                    <label class="form-check-label" for="pregunta_' + pregunta.id + '_si">Si</label>\
-                </div>\
-                <div class="col-2 form-check form-check-inline">\
-                    <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_no" value="N">\
-                    <label class="form-check-label" for="pregunta_' + pregunta.id + '_no">NO</label>\
-                </div>\
+            <div class="col-8">\
+                <label for="pregunta_' + pregunta.id + '">' + pregunta.pregunta + '</label> \
+            </div>\
+            <div class="col-2 form-check form-check-inline">\
+                <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_si" value="S">\
+                <label class="form-check-label" for="pregunta_' + pregunta.id + '_si">SI</label>\
+            </div>\
+            <div class="col-2 form-check form-check-inline">\
+                <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_no" value="N">\
+                <label class="form-check-label" for="pregunta_' + pregunta.id + '_no">NO</label>\
             </div>';
             $("#preguntas").append(div);
         });
