@@ -28,15 +28,20 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! defined( 'ABS_VERSION_RESILENCIA' ) ) {
 	define( 'ABS_VERSION_RESILENCIA', '1.0.0' );
 }
-
+if ( ! defined( 'RES_PLUGIN_PATH' ) ) {
+	define( 'RES_PLUGIN_PATH',  plugin_dir_path( __FILE__ ) );
+}
+if ( ! defined( 'RES_PLUGIN_URL' ) ) {
+	define( 'RES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
 /**
  * Link.
  *
  * @since 1.0.0
  */
-// if ( file_exists( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' ) ) {
-// 	require_once( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' );
-// }
+if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' ) ) {
+	require_once( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' );
+}
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
@@ -51,7 +56,7 @@ function resiliencia_qi_init() {
 function resilencia_qi_create_plugin_database() {
     global $table_prefix, $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
-	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "resiliencia_", $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
+	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "resiliencia_", $charset_collate), file_get_contents( RES_PLUGIN_PATH . "/schema.sql" ));
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	// dbDelta($sql);
 
@@ -79,9 +84,9 @@ function render_resilencia_qi_admin() {
     print '<div class="wrap">';
 	print "<h1>$title</h1>";
 	print do_shortcode('[formulario-registro-empresa]');
-	print plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php';
+	print RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php';
 
-    $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
+    $file = RES_PLUGIN_PATH . "templates/admin.html";
 
     if ( file_exists( $file ) )
         require $file;
