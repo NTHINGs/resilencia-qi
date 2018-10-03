@@ -28,7 +28,6 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
     }
     
     function render_html() {
-        // $current_user = wp_get_current_user();
         $variables = array(
             "%REQUEST_URI%",
         );
@@ -39,10 +38,6 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
     }
 
     function guardar_empresa() {
-        if ( !function_exists( 'wp_handle_upload' ) ){
-            require_once( ABSPATH . 'wp-admin/includes/file.php' );
-        }
-    
         if ( isset( $_POST['submitted'] ) ) {
             $username = $_POST['username'];
             $password = $_POST['password'];
