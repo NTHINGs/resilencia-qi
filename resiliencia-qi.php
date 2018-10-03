@@ -25,20 +25,20 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 1.0.0
  */
 // Plugin version.
-if ( ! defined( 'ABS_VERSION' ) ) {
-	define( 'ABS_VERSION', '1.0.0' );
+if ( ! defined( 'ABS_VERSION_RESILENCIA' ) ) {
+	define( 'ABS_VERSION_RESILENCIA', '1.0.0' );
 }
 
-if ( ! defined( 'ABS_NAME' ) ) {
-	define( 'ABS_NAME', trim( dirname( plugin_basename( __FILE__ ) ), '/' ) );
+if ( ! defined( 'ABS_NAME_RESILENCIA' ) ) {
+	define( 'ABS_NAME_RESILENCIA', trim( dirname( plugin_basename( __FILE__ ) ), '/' ) );
 }
 
-if ( ! defined( 'ABS_DIR' ) ) {
-	define( 'ABS_DIR', WP_PLUGIN_DIR . '/' . ABS_NAME );
+if ( ! defined( 'ABS_DIR_RESILENCIA' ) ) {
+	define( 'ABS_DIR_RESILENCIA', WP_PLUGIN_DIR . '/' . ABS_NAME_RESILENCIA );
 }
 
 if ( ! defined( 'ABS_URL' ) ) {
-	define( 'ABS_URL', WP_PLUGIN_URL . '/' . ABS_NAME );
+	define( 'ABS_URL', WP_PLUGIN_URL . '/' . ABS_NAME_RESILENCIA );
 }
 
 /**
@@ -46,8 +46,8 @@ if ( ! defined( 'ABS_URL' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' ) ) {
-	require_once( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' );
+if ( file_exists( ABS_DIR_RESILENCIA . '/shortcodes/formulario-registro-empresa.php' ) ) {
+	require_once( ABS_DIR_RESILENCIA . '/shortcodes/formulario-registro-empresa.php' );
 }
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
@@ -95,7 +95,7 @@ function render_resilencia_qi_admin() {
     print '<div class="wrap">';
 	print "<h1>$title</h1>";
 	print do_shortcode('[formulario-registro-empresa]');
-	print ABS_DIR . '/shortcodes/formulario-registro-empresa.php';
+	print ABS_DIR_RESILENCIA . '/shortcodes/formulario-registro-empresa.php';
 
     $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
 
