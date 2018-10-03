@@ -83,17 +83,11 @@ function render_resilencia_qi_admin() {
 
     print '<div class="wrap">';
 	print "<h1>$title</h1>";
-	print do_shortcode('[formulario-registro-empresa]');
-	if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' ) ) {
-		print 'FILE EXISTS';
-	}
 
     $file = RES_PLUGIN_PATH . "templates/admin.html";
 
     if ( file_exists( $file ) )
         require $file;
-
-    print "<p class='description'>Included from <code>$file</code></p>";
 
     print '</div>';
 }
