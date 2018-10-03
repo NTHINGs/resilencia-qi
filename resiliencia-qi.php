@@ -46,8 +46,8 @@ if ( ! defined( 'ABS_URL' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( plugin_dir_path(__FILE__) . '/shortcodes/frm-rgst-empr.php' ) ) {
-	require_once( plugin_dir_path(__FILE__) . '/shortcodes/frm-rgst-empr.php' );
+if ( file_exists( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' );
 }
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
@@ -95,7 +95,7 @@ function render_resilencia_qi_admin() {
     print '<div class="wrap">';
 	print "<h1>$title</h1>";
 	print do_shortcode('[formulario-registro-empresa]');
-	print ABS_DIR . '/shortcodes/frm-rgst-empr.php';
+	print ABS_DIR . '/shortcodes/formulario-registro-empresa.php';
 
     $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
 
