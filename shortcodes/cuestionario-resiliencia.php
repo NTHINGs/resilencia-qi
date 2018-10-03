@@ -34,16 +34,16 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
         $preguntas = $wpdb->get_results(
         "SELECT * FROM $table_name"
         );
-        // echo $preguntas;
-        $variables = array(
-            "%REQUEST_URI%",
-            "%PREGUNTAS%",
-        );
-        $values = array(
-            esc_url( $_SERVER['REQUEST_URI'] ),
-            $preguntas,
-        );
-        echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
+        echo $preguntas;
+        // $variables = array(
+        //     "%REQUEST_URI%",
+        //     "%PREGUNTAS%",
+        // );
+        // $values = array(
+        //     esc_url( $_SERVER['REQUEST_URI'] ),
+        //     $preguntas,
+        // );
+        // echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
     }
 
     function guardar_cuestionario() {
