@@ -2,25 +2,25 @@
 /**
  * Mostrar formulario para registrar empresa
  *
- * [formulario-registro]
+ * [formulario-registro-empresa]
  *
  * @package	 resiliencia-qi
  * @since    1.0.0
  */
-if ( ! function_exists( 'formulario_registro_shortcode' ) ) {
+if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
 	// Add the action.
 	add_action( 'plugins_loaded', function() {
 		// Add the shortcode.
-		add_shortcode( 'formulario-registro', 'formulario_registro_shortcode' );
+		add_shortcode( 'formulario-registro-empresa', 'formulario_registro_empresa_shortcode' );
 	});
 
 	/**
-	 * formulario-registro shortcode.
+	 * formulario-registro-empresa shortcode.
 	 *
 	 * @return string
 	 * @since  1.0.0
 	 */
-	function formulario_registro_shortcode() {
+	function formulario_registro_empresa_shortcode() {
         ob_start();
         guardar_empresa();
         render_html();
@@ -35,7 +35,7 @@ if ( ! function_exists( 'formulario_registro_shortcode' ) ) {
         $values = array(
             esc_url( $_SERVER['REQUEST_URI'] ),
         );
-        echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/formulario-registro.html" ));
+        echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/formulario-registro-empresa.html" ));
     }
 
     function guardar_empresa() {
