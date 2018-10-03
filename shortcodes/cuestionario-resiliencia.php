@@ -34,7 +34,6 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
         $preguntas = json_encode($wpdb->get_results(
         "SELECT * FROM $table_name"
         ));
-        echo $preguntas;
         $variables = array(
             "%REQUEST_URI%",
             "%PREGUNTAS%",
