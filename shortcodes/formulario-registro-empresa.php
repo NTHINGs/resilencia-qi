@@ -51,12 +51,16 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
                 'display_name'       =>   $display_name,
                 'user_email'         =>   $email,
                 'user_registered'    =>   $current_time,
-                'user_url'           =>   $hash,
                 'role'               =>   'empresa',
             );
             $user_id = wp_insert_user( $userdata );
             if ( ! is_wp_error( $user_id ) ) {
-                echo 'Tu organización '. $username .' ha sido registrada correctamente <a href="' . get_site_url() . '/wp-login.php">Click aquí para iniciar sesión</a>.';
+                $user_id = add_user_meta( $user_id, 'hash', $hash, true );
+                if ( $user_id !== False ) {
+                    echo 'Tu organización '. $username .' ha sido registrada correctamente <a href="' . get_site_url() . '/wp-login.php">Click aquí para iniciar sesión</a>.';
+                } else {
+                    echo 'Ocurrió un error al dar de alta tu organización';
+                }
             } else {
                 echo 'Ocurrió un error al dar de alta tu organización';
                 echo $user_id;
