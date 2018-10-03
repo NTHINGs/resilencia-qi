@@ -63,7 +63,3 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
         }
     }
 }
-
-if ( shortcode_exists( 'formulario-registro-empresa' ) ) {
-    echo 'ESTOY EN EL IF';
-}
