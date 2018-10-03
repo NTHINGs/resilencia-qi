@@ -95,7 +95,7 @@ function render_resilencia_qi_admin() {
     print '<div class="wrap">';
     print "<h1>$title</h1>";
 
-    $file = plugin_dir_path( __FILE__ ) . "/templates/admin.html";
+    $file = plugin_dir_path( __FILE__ ) . "templates/admin.html";
 
     if ( file_exists( $file ) )
         require $file;

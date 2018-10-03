@@ -4,7 +4,7 @@
  *
  * [formulario-registro]
  *
- * @package	 expedientes-qi
+ * @package	 resiliencia-qi
  * @since    1.0.0
  */
 if ( ! function_exists( 'formulario_registro_shortcode' ) ) {
