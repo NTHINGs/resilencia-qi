@@ -39,10 +39,12 @@
             if ($('#user_pass').val() === $(this).val()) {
                 $('#pass_hint').html('Las contraseñas coinciden');
                 $('#pass_hint').addClass('text-success');
+                $('#pass_hint').removeClass('text-danger');
                 this.setCustomValidity('');
             } else {
                 $('#pass_hint').html('Las contraseñas NO coinciden');
                 $('#pass_hint').addClass('text-danger');
+                $('#pass_hint').removeClass('text-success');
                 this.setCustomValidity('Las contraseñas NO coinciden');
             }
         });
