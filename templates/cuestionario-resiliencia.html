@@ -33,7 +33,9 @@
                 <div class="col-12 pt-3">
                     <h3>Preguntas</h3>
                 </div>
-                <div id="preguntas" class="row"></div>
+                <div class="container-fluid">
+                    <div id="preguntas" class="row"></div>
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
                 </div>
@@ -59,7 +61,6 @@
                 <label class="form-check-label" for="pregunta_' + pregunta.id + '_no">NO</label>\
             </div>';
             $("#preguntas").append(div);
-            $("#preguntas").addClass('h-100');
         });
 
         $('#fechadenacimiento').datepicker({
