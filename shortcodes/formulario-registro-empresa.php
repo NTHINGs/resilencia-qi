@@ -52,6 +52,7 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
                 'user_email'         =>   $email,
                 'user_registered'    =>   $current_time,
                 'user_url'           =>   $hash,
+                'role'               =>   'empresa',
             );
             $user = wp_insert_user( $userdata );
             echo 'Tu organización '. $username .' ha sido registrada correctamente <a href="' . get_site_url() . '/wp-login.php">Click aquí para iniciar sesión</a>.';
