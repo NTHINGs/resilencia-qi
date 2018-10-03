@@ -40,7 +40,7 @@ if ( ! defined( 'RES_PLUGIN_URL' ) ) {
  * @since 1.0.0
  */
 if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' ) ) {
-	// require_once( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' );
+	require_once( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php' );
 }
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
