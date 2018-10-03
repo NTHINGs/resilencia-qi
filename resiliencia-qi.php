@@ -46,8 +46,8 @@ if ( ! defined( 'ABS_URL' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( ABS_DIR . '/shortcodes/frm-rgst-empr.php' ) ) {
-	require_once( ABS_DIR . '/shortcodes/frm-rgst-empr.php' );
+if ( file_exists( plugin_dir_path(__FILE__) . '/shortcodes/frm-rgst-empr.php' ) ) {
+	require_once( plugin_dir_path(__FILE__) . '/shortcodes/frm-rgst-empr.php' );
 }
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
