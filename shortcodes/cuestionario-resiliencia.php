@@ -29,6 +29,9 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
     
     function render_html_form_cuestionario() {
 
+        if (isset($_GET['org_id'])) {
+            echo 'LINK DE ORGANIZACION INCORRECTO';
+        }
         global $wpdb;
         $table_name = $wpdb->prefix . "resiliencia_preguntas";
         $preguntas = json_encode($wpdb->get_results(
@@ -42,7 +45,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
         $values = array(
             esc_url( $_SERVER['REQUEST_URI'] ),
             $preguntas,
-            $_GET['org']
+            $_GET['org_id']
         );
         echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
     }

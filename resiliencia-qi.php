@@ -86,7 +86,7 @@ function resiliencia_qi_admin() {
 function render_resiliencia_qi_admin() {
 	global $title;
 	$current_user = wp_get_current_user();
-	$link = get_user_meta($current_user->ID, 'hash', true);
+	$link = '/cuestionario-resiliencia/?org_id=' . get_user_meta($current_user->ID, 'hash', true);
 	
 	$variables = array(
 		"%TITLE%",
