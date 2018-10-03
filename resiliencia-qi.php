@@ -46,9 +46,9 @@ if ( ! defined( 'ABS_URL' ) ) {
  *
  * @since 1.0.0
  */
-// if ( file_exists( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' ) ) {
-	require_once( ABS_DIR . '/shortcodes/formulario-registro-empresa.php' );
-// }
+if ( file_exists( ABS_DIR . '/shortcodes/frm-rgst-empr.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/frm-rgst-empr.php' );
+}
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
