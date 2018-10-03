@@ -34,9 +34,9 @@ if ( ! defined( 'ABS_VERSION_RESILENCIA' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' ) ) {
-	require_once( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' );
-}
+// if ( file_exists( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' ) ) {
+// 	require_once( plugin_dir_path(__FILE__) . 'shortcodes/formulario-registro-empresa.php' );
+// }
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
