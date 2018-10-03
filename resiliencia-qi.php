@@ -60,7 +60,7 @@ function resilencia_qi_create_plugin_database() {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	// dbDelta($sql);
 
-	add_role( 'empresa', 'Empresa', array( 'read' => true ) );
+	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resilencia'=> true ) );
 }
 register_activation_hook( __FILE__, 'resilencia_qi_create_plugin_database' );
 
@@ -72,7 +72,7 @@ function resilencia_qi_admin() {
     add_menu_page(
         'Cuestionario Resiliencia',     // page title
         'Cuestionario Resiliencia',     // menu title
-        'manage_options',   // capability
+        'resilencia',   // capability
         'cuestionario-resiliencia',     // menu slug
 		'render_resilencia_qi_admin', // callback function
 		'dashicons-universal-access'
