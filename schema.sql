@@ -12,7 +12,7 @@ DROP TABLE %TABLE_PREFIX%registros;
 CREATE TABLE %TABLE_PREFIX%preguntas
 (
  id       INT NOT NULL AUTO_INCREMENT,
- pregunta VARCHAR(200) NOT NULL ,
+ pregunta VARCHAR(500) NOT NULL ,
  tipo     CHAR NOT NULL ,
  grupo    VARCHAR(45) NOT NULL ,
 

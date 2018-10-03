@@ -30,10 +30,11 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
     function render_html_form_cuestionario() {
 
         global $wpdb;
-        $table_name = $wpdb->prefix . "preguntas";
+        $table_name = $wpdb->prefix . "resiliencia_preguntas";
         $preguntas = $wpdb->get_results(
         "SELECT * FROM $table_name"
         );
+        // echo $preguntas;
         $variables = array(
             "%REQUEST_URI%",
             "%PREGUNTAS%",
