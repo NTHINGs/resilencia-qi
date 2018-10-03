@@ -11,7 +11,7 @@ DROP TABLE %TABLE_PREFIX%factores_resiliencia;
 
 CREATE TABLE %TABLE_PREFIX%preguntas
 (
- id       INT NOT NULL ,
+ id       INT NOT NULL AUTO_INCREMENT,
  pregunta VARCHAR(200) NOT NULL ,
  tipo     CHAR NOT NULL ,
  grupo    VARCHAR(45) NOT NULL ,
@@ -24,7 +24,7 @@ PRIMARY KEY (id),
 
 CREATE TABLE %TABLE_PREFIX%factores_resiliencia
 (
- id                INT NOT NULL ,
+ id                INT NOT NULL AUTO_INCREMENT,
  nombre            VARCHAR(100) NOT NULL ,
  fechadenacimiento DATE NOT NULL ,
  edad              INT NOT NULL ,
@@ -38,7 +38,7 @@ PRIMARY KEY (id)
 
 CREATE TABLE %TABLE_PREFIX%resultados
 (
- id           INT NOT NULL ,
+ id           INT NOT NULL AUTO_INCREMENT,
  respuesta    CHAR NOT NULL ,
  pregunta     INT NOT NULL ,
  cuestionario INT NOT NULL ,
