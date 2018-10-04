@@ -36,15 +36,26 @@ function render_resiliencia_qi_admin() {
             "%TITLE%",
             "%SITE_URL%",
             "%HASH%",
-            "%TABLE%",
         );
         $values = array(
             $title,
             get_site_url(),
             get_user_hash(),
-            $wp_list_table->display(),
         );
-		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        print '<div id="poststuff">';
+        print '<div id="post-body" class="metabox-holder columns-2">';
+        print '<div id="post-body-content">';
+        print '<div class="meta-box-sortables ui-sortable">';
+        print '<form method="post">';
+        $wp_list_table->display();
+        print '</form>';
+        print '</div>';
+        print '</div>';
+        print '</div>';
+        print '<br class="clear">';
+        print '</div>';
+        print '</div>';
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
         $variables = array(
