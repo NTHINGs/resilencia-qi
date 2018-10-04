@@ -9,6 +9,9 @@
 if ( file_exists( RES_PLUGIN_PATH . 'util/util.php' ) ) {
 	require_once( RES_PLUGIN_PATH . 'util/util.php' );
 }
+if(!class_exists('Resultados_Resiliencia_Table')){
+    require_once( RES_PLUGIN_PATH . 'util/Resultados_Resiliencia_Table.php' );
+}
 // Creando Página en dashboard
 add_action( 'admin_menu', 'resiliencia_qi_admin' );
 
@@ -24,12 +27,11 @@ function resiliencia_qi_admin() {
 }
 function render_resiliencia_qi_admin() {
     global $title;
-    global $wpdb;
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
-        $current_user = wp_get_current_user();
-        $hash = get_user_meta($current_user->ID, 'hash', true);
+        $wp_list_table = new Resultados_Resiliencia_Table();
+        $wp_list_table->prepare_items();
         $variables = array(
             "%TITLE%",
             "%SITE_URL%",
@@ -38,16 +40,10 @@ function render_resiliencia_qi_admin() {
         $values = array(
             $title,
             get_site_url(),
-            $hash,
+            get_user_hash(),
         );
-        $r = $wpdb->prefix . 'resiliencia_registros';
-        $cuestionarios = $wpdb->get_results("SELECT id FROM $r WHERE organizacion = '$hash'");
-        foreach($cuestionarios as $key => $row) {
-
-            print 'id '.$row->id;
-        }
-        // $resultados = get_resultados($cuestionario_id);
-		// print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        $wp_list_table->display();
+		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
         $variables = array(
