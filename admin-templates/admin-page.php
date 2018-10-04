@@ -42,9 +42,9 @@ function render_resiliencia_qi_admin() {
         );
         $r = $wpdb->prefix . 'resiliencia_registros';
         $cuestionarios = $wpdb->get_results("SELECT id FROM $r WHERE organizacion = '$hash'");
-        foreach($cuestionarios as $key => $value) {
-            print 'key '.$key;
-            print 'value '.$value;
+        foreach($cuestionarios as $key => $row) {
+
+            print 'id '.$row->id;
         }
         // $resultados = get_resultados($cuestionario_id);
 		// print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
