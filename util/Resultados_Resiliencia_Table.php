@@ -155,10 +155,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 
 	public function prepare_items() {
 		$this->_column_headers = $this->get_column_info();
-		print 'ESTOY AQUI';
 	  
 		/** Process bulk action */
 		$this->process_bulk_action();
+		print 'ESTOY AQUI';
 	  
 		$per_page     = $this->get_items_per_page( 'resultados_per_page', 5 );
 		$current_page = $this->get_pagenum();
