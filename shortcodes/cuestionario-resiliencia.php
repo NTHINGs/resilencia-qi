@@ -23,7 +23,9 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
 	function cuestionario_resiliencia_shortcode() {
         ob_start();
         guardar_cuestionario();
-        render_html_form_cuestionario();
+        if ( !isset( $_POST['submitted'] ) ) {
+            render_html_form_cuestionario();
+        }
         return ob_get_clean();
     }
     
@@ -70,17 +72,16 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 '%s',
             ));
 
-            $cuestionario = $wpdb->insert_id;
-
-            echo $cuestionario;
+            $cuestionario_id = $wpdb->insert_id;
 
             $resultados_table_name = $wpdb->prefix . "resiliencia_resultados";
-            for ($q = 1; $q <= 48; $q++){
-                if (isset($_POST["pregunta_" . $q])){
+            foreach($_POST as $key => $value) {
+                if (strpos($key, 'pregunta_')>=0) {
+                    $pregunta = array_pop(explode('pregunta_', $key));
                     $respuesta = array(
-                        'respuesta'    => $_POST["pregunta_" . $q],
-                        'pregunta'     => $q,
-                        'cuestionario' => $cuestionario,
+                        'respuesta'    => $value,
+                        'pregunta'     => $pregunta,
+                        'cuestionario' => $cuestionario_id,
                     );
 
                     $wpdb->insert( $resultados_table_name, $respuesta, array(

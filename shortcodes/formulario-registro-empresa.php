@@ -23,7 +23,9 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
 	function formulario_registro_empresa_shortcode() {
         ob_start();
         guardar_empresa();
-        render_html_form();
+        if ( !isset( $_POST['submitted'] ) ) {
+            render_html_form();
+        }
         return ob_get_clean();
     }
     
