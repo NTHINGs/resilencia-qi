@@ -130,8 +130,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	function get_columns() {
 		$columns = [
 			'cb'     => '<input type="checkbox" />',
-			'id'     => 'ID',
-			'nombre' => 'Nombre',
+			'id'     => __('ID'),
+			'nombre' => __('Nombre'),
 		];
 		
 		return $columns;
