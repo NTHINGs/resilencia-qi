@@ -23,7 +23,7 @@ function resiliencia_qi_admin() {
     );
 }
 function render_resiliencia_qi_admin() {
-	global $title;
+	global $title, $wpdb;
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
