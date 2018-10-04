@@ -141,7 +141,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		] );
 	  
 	  
-		$this->items = self::get_customers( $per_page, $current_page );
+		$this->items = self::get_resultados_por_org( $per_page, $current_page );
 	}
 
 	public function process_bulk_action() {
