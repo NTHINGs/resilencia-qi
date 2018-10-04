@@ -101,6 +101,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 }
             }
             echo 'Formulario enviado correctamente';
+            echo do_shortcode('[resultados-cuestionario cuestionario_id="' . $cuestionario_id . '"]');
         }
     }
 }

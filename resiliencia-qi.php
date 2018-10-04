@@ -45,6 +45,9 @@ if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/formulario-registro-empresa.php'
 if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/cuestionario-resiliencia.php' ) ) {
 	require_once( RES_PLUGIN_PATH . 'shortcodes/cuestionario-resiliencia.php' );
 }
+if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' ) ) {
+	require_once( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' );
+}
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
@@ -55,6 +58,7 @@ function resiliencia_qi_init() {
 	wp_enqueue_script( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array( 'jquery', 'popper' ), '3.3.1', false );
 	wp_enqueue_script( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js', array( 'jquery' ), '3.3.1', false );
 	wp_enqueue_style( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css');
+	wp_enqueue_script('chart', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js', array(), null, true);
 }
 
 // Crear Tablas en MySql
