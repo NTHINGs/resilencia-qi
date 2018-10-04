@@ -80,7 +80,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// 	$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$this->hash'";
 		// }
 		// $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
-		
+		print $wpdb->get_var( $sql );
 		return $wpdb->get_var( $sql );
 	}
 
