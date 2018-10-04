@@ -36,13 +36,14 @@ function render_resiliencia_qi_admin() {
             "%TITLE%",
             "%SITE_URL%",
             "%HASH%",
+            "%TABLE%",
         );
         $values = array(
             $title,
             get_site_url(),
             get_user_hash(),
+            $wp_list_table->display(),
         );
-        $wp_list_table->display();
 		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
