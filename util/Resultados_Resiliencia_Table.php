@@ -29,7 +29,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 
 		$resultados = array();
 		$hash = get_user_hash();
-		$sql = "SELECT id FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
+		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
 		
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -40,7 +40,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		$cuestionarios = $wpdb->get_results($sql);
+		$cuestionarios = $wpdb->get_results($sql, 'ARRAY_A');
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
@@ -77,7 +77,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// create a nonce
 		$delete_nonce = wp_create_nonce( 'sp_delete_customer' );
 		
-		$title = '<strong>' . $item['id'] . '</strong>';
+		$title = '<strong>' . $item['nombre'] . '</strong>';
 		
 		$actions = [
 			'delete' => sprintf( '<a href="?page=%s&action=%s&customer=%s&_wpnonce=%s">Delete</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ), $delete_nonce )
@@ -89,6 +89,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'id':
+			case 'nombre':
 			return $item[ $column_name ];
 			default:
 			return print_r( $item, true ); //Show the whole array for troubleshooting purposes
@@ -103,8 +104,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 	function get_columns() {
 		$columns = [
-			'cb'    => '<input type="checkbox" />',
-			'id'    => 'id',
+			'cb'     => '<input type="checkbox" />',
+			'id'     => 'ID',
+			'nombre' => 'Nombre',
 		];
 		
 		return $columns;
@@ -113,6 +115,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	public function get_sortable_columns() {
 		$sortable_columns = array(
 		  'id' => array( 'id', true ),
+		  'nombre' => array( 'nombre', false ),
 		);
 	  
 		return $sortable_columns;
@@ -120,7 +123,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 
 	public function get_bulk_actions() {
 		$actions = [
-			'bulk-delete' => 'Delete'
+			'bulk-delete' => 'Eliminar'
 		];
 		
 		return $actions;
