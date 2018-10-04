@@ -7,6 +7,9 @@
  * @package	 resiliencia-qi
  * @since    1.0.0
  */
+if ( file_exists( RES_PLUGIN_PATH . 'util/util.php' ) ) {
+	require_once( RES_PLUGIN_PATH . 'util/util.php' );
+}
 if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
 	// Add the action.
 	add_action( 'plugins_loaded', function() {
@@ -28,92 +31,36 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
     
     function render_html_resultados_cuestionario($atts) {
         $_atts = shortcode_atts( array(
-			'cuestionario_id'  => NULL,
+            'cuestionario_id'  => NULL,
         ), $atts );
         $cuestionario_id = $_atts['cuestionario_id'];
         if($cuestionario_id == NULL) {
-            echo 'ERROR MOSTRANDO LOS RESULTADOS';
+            // Resultados generales de la organizacion
+            echo resultados_organizacion_resiliencia();
+        } elseif ($cuestionario_id != NULL) {
+            // Resultados individuales
+            echo resultados_por_cuestionario_resiliencia($cuestionario_id);
         } else {
-            $variables = array(
-                '%DATA%',
-            );
-
-            $resultados = get_resultados($cuestionario_id);
-            $values = array(
-                $resultados,
-            );
-            echo $resultados;
-            
-            echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario.html" ));
+            echo 'ERROR: El shortcode tiene parametros incorrectos.';
         }
     }
 
-    function get_resultados($cuestionario_id) {
-        global $wpdb;
-        $resultados = array();
-        $rs = $wpdb->prefix . 'resiliencia_resultados RS';
-        $p = $wpdb->prefix . 'resiliencia_preguntas P';
-        $r = $wpdb->prefix . 'resiliencia_registros R';
-
-        $sql = "SELECT COUNT(RS.respuesta)
-            FROM %RS%, %P%, %R%
-            WHERE RS.pregunta = P.id 
-            AND RS.cuestionario = R.id 
-            AND R.id = '%ID%'
-            AND P.tipo = '%TIPO%'
-            AND P.grupo = '%GRUPO%'
-            AND RS.respuesta = '%RESPUESTA%'";
-        
+    function resultados_organizacion_resiliencia() {
+        $current_user = wp_get_current_user();
+        $org_id = get_user_meta($current_user->ID, 'hash', true);
+    }
+    
+    function resultados_por_cuestionario_resiliencia($cuestionario_id) {
         $variables = array(
-            '%RS%',
-            '%P%',
-            '%R%',
-            '%ID%',
-            '%TIPO%',
-            '%GRUPO%',
-            '%RESPUESTA%',
+            '%DATA%',
+        );
+
+        $resultados = get_resultados($cuestionario_id);
+        $values = array(
+            $resultados,
         );
         
-        $obj = array(
-            'Autoestima' => array(
-                'P' => 'S',
-                'N' => 'N',
-            ),
-            'Empatía' => array(
-                'P' => 'S',
-                'N' => 'N',
-            ),
-            'Autonomía' => array(
-                'P' => 'S',
-                'N' => 'N',
-            ),
-            'Humor' => array(
-                'P' => 'S',
-                'N' => 'N',
-            ),
-            'Creatividad' => array(
-                'P' => 'S',
-                'N' => 'N',
-            ),
-        );
-
-        foreach($obj as $grupo => $array_tipo_res) {
-            $resultado = 0;
-            foreach($array_tipo_res as $tipo => $respuesta) {
-                $values = array(
-                    $rs,
-                    $p,
-                    $r,
-                    $cuestionario_id,
-                    $tipo,
-                    $grupo,
-                    $respuesta,
-                );
-                $resultado += (int)$wpdb->get_var(str_replace($variables, $values, $sql));
-            }
-            array_push($resultados, $resultado);
-        }
-
-        return json_encode($resultados);
+        return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
     }
+
 }

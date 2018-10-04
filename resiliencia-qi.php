@@ -49,6 +49,10 @@ if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' ) )
 	require_once( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' );
 }
 
+if ( file_exists( RES_PLUGIN_PATH . 'admin-templates/admin-page.php' ) ) {
+	require_once( RES_PLUGIN_PATH . 'admin-templates/admin-page.php' );
+}
+
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
 function resiliencia_qi_init() {
@@ -70,35 +74,6 @@ function resiliencia_qi_create_plugin_database() {
 	dbDelta($sql);
 
 	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resiliencia'=> true ) );
+	add_role( 'reporter-empresa', 'Reportador de Empresas', array( 'read' => true, 'resiliencia'=> true, 'resiliencia_admin'=> true ) );
 }
 register_activation_hook( __FILE__, 'resiliencia_qi_create_plugin_database' );
-
-
-// Creando Página en dashboard
-add_action( 'admin_menu', 'resiliencia_qi_admin' );
-
-function resiliencia_qi_admin() {
-    add_menu_page(
-        'Cuestionario Resiliencia',     // page title
-        'Cuestionario Resiliencia',     // menu title
-        'resiliencia',   // capability
-        'cuestionario-resiliencia',     // menu slug
-		'render_resiliencia_qi_admin', // callback function
-		'dashicons-universal-access'
-    );
-}
-function render_resiliencia_qi_admin() {
-	global $title;
-	$current_user = wp_get_current_user();
-	$link = '/cuestionario-resiliencia/?org_id=' . get_user_meta($current_user->ID, 'hash', true);
-	
-	$variables = array(
-		"%TITLE%",
-		"%LINK%",
-	);
-	$values = array(
-		$title,
-		$link
-	);
-	print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/admin.html" ));
-}

@@ -1,12 +1,5 @@
 -- ****************** RESILIENCIA QI ******************;
 -- ***************************************************;
-DROP TABLE %TABLE_PREFIX%resultados;
-
-
-DROP TABLE %TABLE_PREFIX%preguntas;
-
-
-DROP TABLE %TABLE_PREFIX%registros;
 -- ************************************** %TABLE_PREFIX%preguntas
 
 CREATE TABLE %TABLE_PREFIX%preguntas
