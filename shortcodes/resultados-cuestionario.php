@@ -98,6 +98,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         );
 
         foreach($obj as $grupo => $array_tipo_res) {
+            $resultado = 0;
             foreach($array_tipo_res as $tipo => $respuesta) {
                 $values = array(
                     $rs,
@@ -108,12 +109,9 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
                     $grupo,
                     $respuesta,
                 );
-                echo 'IM IN THE FOR';
-                echo str_replace($variables, $values, $sql);
-                $resultado = $wpdb->get_var(str_replace($variables, $values, $sql));
-                echo $resultado;
-                array_push($resultados, $resultado);
+                $resultado += (int)$wpdb->get_var(str_replace($variables, $values, $sql));
             }
+            array_push($resultados, $resultado);
         }
 
         return json_encode($resultados);
