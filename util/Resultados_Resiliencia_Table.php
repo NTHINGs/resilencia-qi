@@ -45,6 +45,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
 		// }
+
+		print_r( $cuestionarios, true );
 		
 		return $cuestionarios;
 	}
@@ -67,6 +69,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
 		// }
+
+		print_r( $cuestionarios, true );
 		
 		return $cuestionarios;
 	}
