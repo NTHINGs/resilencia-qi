@@ -41,10 +41,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
 		$cuestionarios = $wpdb->get_results($sql);
-        foreach($cuestionarios as $key => $row) {
-			// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
-			array_push($resultados, get_resultados($row->id));
-		}
+        // foreach($cuestionarios as $key => $row) {
+		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
+		// 	array_push($resultados, get_resultados($row->id));
+		// }
 		
 		return $cuestionarios;
 	}
@@ -77,10 +77,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// create a nonce
 		$delete_nonce = wp_create_nonce( 'sp_delete_customer' );
 		
-		$title = '<strong>' . $item['name'] . '</strong>';
+		$title = '<strong>' . $item['id'] . '</strong>';
 		
 		$actions = [
-			'delete' => sprintf( '<a href="?page=%s&action=%s&customer=%s&_wpnonce=%s">Delete</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['ID'] ), $delete_nonce )
+			'delete' => sprintf( '<a href="?page=%s&action=%s&customer=%s&_wpnonce=%s">Delete</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ), $delete_nonce )
 		];
 		
 		return $title . $this->row_actions( $actions );
