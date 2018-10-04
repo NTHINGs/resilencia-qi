@@ -72,7 +72,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 
 	public static function record_count() {
 		global $wpdb;
-		
+		print 'ESTOY AQUI';
+		print 'hash ' . $this->hash;
 		if($this->hash == NULL) {
 			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
 		} else {
@@ -162,7 +163,6 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$per_page     = $this->get_items_per_page( 'resultados_per_page', 10 );
 		$current_page = $this->get_pagenum();
 		$total_items  = self::record_count();
-		print 'ESTOY AQUI';
 	  
 		$this->set_pagination_args( [
 		  'total_items' => $total_items, //WE have to calculate the total number of items
