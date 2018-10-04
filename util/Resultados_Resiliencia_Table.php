@@ -48,7 +48,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// 	array_push($resultados, get_resultados($row->id));
 		// }
 
-		print_r( $cuestionarios, true );
+		print_r( $cuestionarios );
 		
 		return $cuestionarios;
 	}
@@ -74,7 +74,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		// 	array_push($resultados, get_resultados($row->id));
 		// }
 
-		print_r( $cuestionarios, true );
+		 print print_r( $cuestionarios );
 		
 		return $cuestionarios;
 	}
