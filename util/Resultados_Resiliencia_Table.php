@@ -11,11 +11,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 class Resultados_Resiliencia_Table extends WP_List_Table {
-	public $hash;
+	// public $hash;
 	/** Class constructor */
-	public function __construct($hash) {
+	public function __construct() {
 		
-		$this->hash = $hash;
+		// $this->hash = $hash;
 		parent::__construct( [
 			'singular' => 'Resultado', //singular name of the listed records
 			'plural'   => 'Resultados', //plural name of the listed records
@@ -74,11 +74,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	public static function record_count() {
 		global $wpdb;
 		print 'ESTOY AQUI';
-		if($this->hash == 'no') {
+		// if($this->hash == 'no') {
 			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
-		} else {
-			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
-		}
+		// } else {
+			// $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
+		// }
 		print $wpdb->get_var( $sql );
 		return $wpdb->get_var( $sql );
 	}
@@ -169,11 +169,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		  'per_page'    => $per_page //WE have to determine how many items to show on a page
 		] );
 	  
-		if($this->hash == 'no') {
+		// if($this->hash == 'no') {
 			$this->items = self::get_resultados_all_org( $per_page, $current_page );
-		} else {
-			$this->items = self::get_resultados_por_org( $per_page, $current_page );
-		}
+		// } else {
+			// $this->items = self::get_resultados_por_org( $per_page, $current_page );
+		// }
 	}
 		
 
