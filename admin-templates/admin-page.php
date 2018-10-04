@@ -32,6 +32,7 @@ function render_resiliencia_qi_admin() {
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
+        print 'ESTOY AQUI';
         $wp_list_table = new Resultados_Resiliencia_Table(get_user_hash());
         $wp_list_table->prepare_items();
         $variables = array(
