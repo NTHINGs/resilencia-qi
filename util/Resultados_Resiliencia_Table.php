@@ -158,9 +158,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	  
 		/** Process bulk action */
 		$this->process_bulk_action();
-		print 'ESTOY AQUI';
 	  
-		$per_page     = $this->get_items_per_page( 'resultados_per_page', 5 );
+		$per_page     = $this->get_items_per_page( 'resultados_per_page', 10 );
+		print 'ESTOY AQUI';
 		$current_page = $this->get_pagenum();
 		$total_items  = self::record_count();
 	  
