@@ -71,11 +71,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		return $cuestionarios;
 	}
 
-	public static function record_count() {
+	public static function record_count($hash) {
 		global $wpdb;
 		
-		$hash = get_user_hash();
-		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
+		if($hash == NULL) {
+			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
+		} else {
+			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
+		}
 		
 		return $wpdb->get_var( $sql );
 	}
@@ -160,7 +163,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	  
 		$per_page     = $this->get_items_per_page( 'resultados_per_page', 5 );
 		$current_page = $this->get_pagenum();
-		$total_items  = self::record_count();
+		$total_items  = self::record_count($hash);
 	  
 		$this->set_pagination_args( [
 		  'total_items' => $total_items, //WE have to calculate the total number of items
