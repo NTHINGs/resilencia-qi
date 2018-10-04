@@ -30,12 +30,80 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $_atts = shortcode_atts( array(
 			'cuestionario_id'  => NULL,
         ), $atts );
-        if($_atts['cuestionario_id'] == NULL) {
+        $cuestionario_id = $_atts['cuestionario_id'];
+        if($cuestionario_id == NULL) {
             echo 'ERROR MOSTRANDO LOS RESULTADOS';
         } else {
-            $variables = array();
-            $values = array();
+            $variables = array(
+                '%DATA%',
+            );
+
+            $values = array(
+                get_resultados($cuestionario_id),
+            );
             echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario.html" ));
         }
+    }
+
+    function get_resultados($cuestionario_id) {
+        global $wpdb;
+        $resultados = array();
+        $rs = $wpdb->prefix . 'resiliencia_resultados RS';
+        $p = $wpdb->prefix . 'resiliencia_preguntas P';
+        $r = $wpdb->prefix . 'resiliencia_registros R';
+
+        $sql = "SELECT COUNT(RS.respuesta)
+            FROM $rs, $p, $r 
+            WHERE RS.pregunta = P.id 
+            AND RS.cuestionario = R.id 
+            AND R.id = $cuestionario_id
+            AND P.tipo = '%TIPO%'
+            AND P.grupo = '%GRUPO%'
+            AND RS.respuesta = '%RESPUESTA%'";
+        
+        $variables = array(
+            '%TIPO%',
+            '%GRUPO%',
+            '%RESPUESTA%',
+        );
+        
+        $obj = array(
+            'Autoestima' => array(
+                'P' => 'S',
+                'N' => 'N',
+            ),
+            'Empatía' => array(
+                'P' => 'S',
+                'N' => 'N',
+            ),
+            'Autonomía' => array(
+                'P' => 'S',
+                'N' => 'N',
+            ),
+            'Humor' => array(
+                'P' => 'S',
+                'N' => 'N',
+            ),
+            'Creatividad' => array(
+                'P' => 'S',
+                'N' => 'N',
+            ),
+        );
+
+        foreach($obj as $grupo => $array_tipo_res) {
+            foreach($array_tipo_res as $tipo => $respuesta) {
+                $values = array(
+                    $tipo,
+                    $grupo,
+                    $respuesta,
+                );
+
+                $resultado = $wpdb->get_results(str_replace($variables, $values, $sql))[0];
+                echo $resultado;
+                array_push($resultados, $resultado);
+            }
+        }
+
+        return json_encode($resultados);
     }
 }
