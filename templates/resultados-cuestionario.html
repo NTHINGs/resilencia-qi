@@ -1,6 +1,6 @@
 <canvas id="resultados" width="400" height="400"></canvas>
 <script>
-    var ctx = $('#resultados');
+    var ctx = document.getElementById("resultados").getContext("2d");
     ctx.canvas.height = 600;
     ctx.canvas.width = $('#main').innerWidth;
     var resultados = new Chart(ctx, {
