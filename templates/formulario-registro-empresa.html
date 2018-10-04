@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="row" action="%REQUEST_URI%" method="POST">
+            <form id="form_registro" class="row" action="%REQUEST_URI%" method="POST">
                 <div class="form-group col-12">
                     <label for="display_name">Nombre De Tu Organización</label>
                     <input type="text" class="form-control" id="display_name" name="display_name" required>
@@ -27,7 +27,8 @@
                     <small id="pass_hint" class="form-text"></small>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary" name="submitted">Registrar Organización</button>
+                    <button id="submit_button" class="btn btn-primary" name="submitted">Registrar Organización</button>
+                    <small id="form_hint" class="form-text text-danger">Faltan campos requeridos.</small>
                 </div>
             </form>
         </div>
@@ -37,6 +38,7 @@
 <script>
     jQuery(document).ready(function ($) {
         // Password inputs
+        $('#form_hint').hide();
         $('#password_confirm').keyup(function () {
             'use strict';
 
@@ -52,5 +54,18 @@
                 this.setCustomValidity('Las contraseñas NO coinciden');
             }
         });
+
+        $('#submit_button').click(function (e) {
+            e.preventDefault();
+            if ($('#display_name').val() && $('#username').val() && $('#email').val() && $('#password').val()) {
+                // Si los inputs requeridos tienen valor. Enviar el formulario
+                $('#form_hint').hide();
+                $("#form_registro").submit();
+            } else {
+                $('#form_hint').show();
+            }
+
+        });
+
     });
 </script>

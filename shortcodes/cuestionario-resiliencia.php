@@ -33,23 +33,38 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
 
         if (!isset($_GET['org_id'])) {
             echo 'LINK DE ORGANIZACION INCORRECTO';
+        } else {
+            global $wpdb;
+            $table_name = $wpdb->prefix . "resiliencia_preguntas";
+            $preguntas = json_encode($wpdb->get_results(
+            "SELECT * FROM $table_name"
+            ));
+            $variables = array(
+                "%REQUEST_URI%",
+                "%PREGUNTAS%",
+                "%ORG_ID%",
+                "%ORG_NAME%"
+            );
+            $organizacion = get_users(
+                array(
+                    'role' => 'empresa',
+                    'meta_query' => array(
+                        array(
+                            'key' => 'hash',
+                            'value' => $_GET['org_id'],
+                            'compare' => '=='
+                        )
+                    )
+                )
+            )[0];
+            $values = array(
+                esc_url( $_SERVER['REQUEST_URI'] ),
+                $preguntas,
+                $_GET['org_id'],
+                $organizacion
+            );
+            echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
         }
-        global $wpdb;
-        $table_name = $wpdb->prefix . "resiliencia_preguntas";
-        $preguntas = json_encode($wpdb->get_results(
-        "SELECT * FROM $table_name"
-        ));
-        $variables = array(
-            "%REQUEST_URI%",
-            "%PREGUNTAS%",
-            "%ORG_ID%"
-        );
-        $values = array(
-            esc_url( $_SERVER['REQUEST_URI'] ),
-            $preguntas,
-            $_GET['org_id']
-        );
-        echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
     }
 
     function guardar_cuestionario() {
