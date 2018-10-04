@@ -14,6 +14,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	public $hash;
 	/** Class constructor */
 	public function __construct($hash) {
+		print 'hash ' . $hash;
 		$this->hash = $hash;
 		parent::__construct( [
 			'singular' => 'Resultado', //singular name of the listed records
