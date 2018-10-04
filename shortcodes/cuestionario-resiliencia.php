@@ -45,6 +45,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 "%ORG_ID%",
                 "%ORG_NAME%"
             );
+            echo $_GET['org_id'];
             $organizacion = get_users(
                 array(
                     'role' => 'empresa',
@@ -57,6 +58,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                     )
                 )
             )[0];
+            echo $organizacion
             $values = array(
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
