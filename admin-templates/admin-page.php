@@ -46,7 +46,7 @@ function render_resiliencia_qi_admin() {
             get_site_url(),
             get_user_hash(),
         );
-        print 'ESTOY AQUI';
+        
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
         render_table_resultados($wp_list_table);
         

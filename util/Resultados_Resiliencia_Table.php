@@ -154,7 +154,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	}
 
 	public function prepare_items() {
-
+		print 'ESTOY AQUI';
 		$this->_column_headers = $this->get_column_info();
 	  
 		/** Process bulk action */
