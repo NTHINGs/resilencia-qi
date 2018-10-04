@@ -58,7 +58,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                     )
                 )
             )[0];
-            echo $organizacion
+            echo $organizacion;
             $values = array(
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
