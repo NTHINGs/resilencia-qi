@@ -52,7 +52,7 @@ function render_resiliencia_qi_admin() {
         
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
-        $wp_list_table = new Resultados_Resiliencia_Table(NULL);
+        $wp_list_table = new Resultados_Resiliencia_Table('no');
         $wp_list_table->prepare_items();
         $variables = array(
             "%TITLE%",
