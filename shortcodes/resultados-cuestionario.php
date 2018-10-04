@@ -109,6 +109,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
                     $respuesta,
                 );
                 echo 'IM IN THE FOR';
+                echo str_replace($variables, $values, $sql);
                 $resultado = $wpdb->get_results(str_replace($variables, $values, $sql))[0];
                 echo $resultado;
                 array_push($resultados, $resultado);
