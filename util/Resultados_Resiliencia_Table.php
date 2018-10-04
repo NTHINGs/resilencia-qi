@@ -169,7 +169,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		  'per_page'    => $per_page //WE have to determine how many items to show on a page
 		] );
 	  
-		$this->items = self::get_resultados_all_org( $per_page, $current_page );
+		if($this->hash == NULL) {
+			$this->items = self::get_resultados_all_org( $per_page, $current_page )
+		} else {
+			$this->items = self::get_resultados_por_org( $per_page, $current_page )
+		}
 	}
 		
 
