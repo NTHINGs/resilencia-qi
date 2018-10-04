@@ -45,14 +45,12 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 "%ORG_ID%",
                 "%ORG_NAME%"
             );
-            echo $_GET['org_id'];
             $organizacion = get_users(
                 array(
                     'role' => 'empresa',
                     'hash' => $_GET['org_id'],
                 )
-            );
-            echo print_r($organizacion);
+            )[0]->display_name;
             $values = array(
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
