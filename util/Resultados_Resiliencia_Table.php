@@ -11,10 +11,10 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 class Resultados_Resiliencia_Table extends WP_List_Table {
-
+	public $hash;
 	/** Class constructor */
-	public function __construct() {
-
+	public function __construct($hash) {
+		$this->hash = $hash;
 		parent::__construct( [
 			'singular' => 'Resultado', //singular name of the listed records
 			'plural'   => 'Resultados', //plural name of the listed records
@@ -28,8 +28,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		global $wpdb;
 
 		$resultados = array();
-		$hash = get_user_hash();
-		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
+		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$this->hash'";
 		
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -40,7 +39,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		$cuestionarios = $wpdb->get_results($sql, 'ARRAY_A');
+		$cuestionarios = $wpdb->get_results($sql);
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
@@ -62,7 +61,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		$cuestionarios = $wpdb->get_results($sql, 'ARRAY_A');
+		$cuestionarios = $wpdb->get_results($sql);
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
@@ -71,13 +70,13 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		return $cuestionarios;
 	}
 
-	public static function record_count($hash) {
+	public static function record_count() {
 		global $wpdb;
 		
-		if($hash == NULL) {
+		if($this->hash == NULL) {
 			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
 		} else {
-			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$hash'";
+			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$this->hash'";
 		}
 		
 		return $wpdb->get_var( $sql );
@@ -154,7 +153,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		return $actions;
 	}
 
-	public function prepare_items($hash) {
+	public function prepare_items() {
 
 		$this->_column_headers = $this->get_column_info();
 	  
@@ -163,19 +162,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	  
 		$per_page     = $this->get_items_per_page( 'resultados_per_page', 5 );
 		$current_page = $this->get_pagenum();
-		$total_items  = self::record_count($hash);
+		$total_items  = self::record_count();
 	  
 		$this->set_pagination_args( [
 		  'total_items' => $total_items, //WE have to calculate the total number of items
 		  'per_page'    => $per_page //WE have to determine how many items to show on a page
 		] );
 	  
-	  
-		if($hash == NULL) {
-			$this->items = self::get_resultados_all_org( $per_page, $current_page );
-		} else {
-			$this->items = self::get_resultados_por_org( $per_page, $current_page );
-		}
+		$this->items = self::get_resultados_all_org( $per_page, $current_page );
 	}
 		
 
