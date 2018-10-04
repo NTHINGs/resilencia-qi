@@ -13,10 +13,11 @@ if(!class_exists('Resultados_Resiliencia_Table')){
     require_once( RES_PLUGIN_PATH . 'util/Resultados_Resiliencia_Table.php' );
 }
 // Creando Página en dashboard
+add_filter( 'set-screen-option', 'set_screen', 10, 3 );
 add_action( 'admin_menu', 'resiliencia_qi_admin' );
 
 function resiliencia_qi_admin() {
-    add_menu_page(
+    $hook = add_menu_page(
         'Cuestionario Resiliencia',     // page title
         'Cuestionario Resiliencia',     // menu title
         'resiliencia',   // capability
@@ -24,6 +25,7 @@ function resiliencia_qi_admin() {
 		'render_resiliencia_qi_admin', // callback function
 		'dashicons-universal-access'
     );
+    add_action( "load-$hook", 'screen_option' );
 }
 function render_resiliencia_qi_admin() {
     global $title;
@@ -67,4 +69,22 @@ function render_resiliencia_qi_admin() {
 		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
 	}
 	
+}
+
+public static function set_screen( $status, $option, $value ) {
+	return $value;
+}
+
+public function screen_option() {
+
+	$option = 'per_page';
+	$args   = [
+		'label'   => 'Resultados',
+		'default' => 10,
+		'option'  => 'resultados_per_page'
+	];
+
+	add_screen_option( $option, $args );
+
+	$this->customers_obj = new Customers_List();
 }
