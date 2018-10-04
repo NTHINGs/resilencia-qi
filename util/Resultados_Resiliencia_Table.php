@@ -170,9 +170,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		] );
 	  
 		if($this->hash == NULL) {
-			$this->items = self::get_resultados_all_org( $per_page, $current_page )
+			$this->items = self::get_resultados_all_org( $per_page, $current_page );
 		} else {
-			$this->items = self::get_resultados_por_org( $per_page, $current_page )
+			$this->items = self::get_resultados_por_org( $per_page, $current_page );
 		}
 	}
 		
