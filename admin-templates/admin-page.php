@@ -71,11 +71,11 @@ function render_resiliencia_qi_admin() {
 	
 }
 
-public static function set_screen( $status, $option, $value ) {
+function set_screen( $status, $option, $value ) {
 	return $value;
 }
 
-public function screen_option() {
+function screen_option() {
 
 	$option = 'per_page';
 	$args   = [
@@ -85,6 +85,4 @@ public function screen_option() {
 	];
 
 	add_screen_option( $option, $args );
-
-	$this->customers_obj = new Customers_List();
 }
