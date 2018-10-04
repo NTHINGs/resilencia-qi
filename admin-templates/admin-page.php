@@ -42,9 +42,12 @@ function render_resiliencia_qi_admin() {
         );
         $r = $wpdb->prefix . 'resiliencia_registros';
         $cuestionarios = $wpdb->get_results("SELECT id FROM $r WHERE organizacion = '$hash'");
-        print json_encode($cuestionarios);
-        $resultados = get_resultados($cuestionario_id);
-		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        foreach($cuestionarios as $key => $value) {
+            print 'key '.$key;
+            print 'value '.$value;
+        }
+        // $resultados = get_resultados($cuestionario_id);
+		// print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
         $variables = array(
