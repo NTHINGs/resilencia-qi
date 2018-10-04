@@ -40,6 +40,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
+		print $sql;
+
 		$cuestionarios = $wpdb->get_results($sql);
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
@@ -63,6 +65,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$sql .= " LIMIT $per_page";
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
+
+		print $sql;
 
 		$cuestionarios = $wpdb->get_results($sql);
         // foreach($cuestionarios as $key => $row) {
