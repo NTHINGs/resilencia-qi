@@ -51,8 +51,8 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                     'role' => 'empresa',
                     'hash' => $_GET['org_id'],
                 )
-            )[0];
-            echo $organizacion;
+            );
+            echo print_r($organizacion);
             $values = array(
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
