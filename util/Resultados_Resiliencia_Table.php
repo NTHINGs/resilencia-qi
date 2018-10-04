@@ -75,11 +75,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		global $wpdb;
 		print 'ESTOY AQUI';
 		// if($this->hash == NULL) {
-		// 	$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
+			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
 		// } else {
 		// 	$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$this->hash'";
 		// }
-		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
+		// $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
 		
 		return $wpdb->get_var( $sql );
 	}
