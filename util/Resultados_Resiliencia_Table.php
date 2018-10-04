@@ -49,6 +49,28 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		return $cuestionarios;
 	}
 
+	public static function get_resultados_all_org($per_page = 10, $page_number = 1) {
+		global $wpdb;
+		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros";
+		
+		if ( ! empty( $_REQUEST['orderby'] ) ) {
+			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
+			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
+		}
+	
+		$sql .= " LIMIT $per_page";
+	
+		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
+
+		$cuestionarios = $wpdb->get_results($sql, 'ARRAY_A');
+        // foreach($cuestionarios as $key => $row) {
+		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
+		// 	array_push($resultados, get_resultados($row->id));
+		// }
+		
+		return $cuestionarios;
+	}
+
 	public static function record_count() {
 		global $wpdb;
 		
@@ -129,7 +151,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		return $actions;
 	}
 
-	public function prepare_items() {
+	public function prepare_items($hash) {
 
 		$this->_column_headers = $this->get_column_info();
 	  
@@ -146,8 +168,13 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		] );
 	  
 	  
-		$this->items = self::get_resultados_por_org( $per_page, $current_page );
+		if($hash == NULL) {
+			$this->items = self::get_resultados_all_org( $per_page, $current_page );
+		} else {
+			$this->items = self::get_resultados_por_org( $per_page, $current_page );
+		}
 	}
+		
 
 	public function process_bulk_action() {
 

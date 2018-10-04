@@ -33,7 +33,7 @@ function render_resiliencia_qi_admin() {
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
         $wp_list_table = new Resultados_Resiliencia_Table();
-        $wp_list_table->prepare_items();
+        $wp_list_table->prepare_items(get_user_hash());
         $variables = array(
             "%TITLE%",
             "%SITE_URL%",
@@ -45,30 +45,38 @@ function render_resiliencia_qi_admin() {
             get_user_hash(),
         );
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        print '<div id="poststuff">';
-        print '<div id="post-body" class="metabox-holder columns-2">';
-        print '<div id="post-body-content">';
-        print '<div class="meta-box-sortables ui-sortable">';
-        print '<form method="post">';
-        $wp_list_table->display();
-        print '</form>';
-        print '</div>';
-        print '</div>';
-        print '</div>';
-        print '<br class="clear">';
-        print '</div>';
-        print '</div>';
+        render_table_resultados($wp_list_table);
+        
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
+        $wp_list_table = new Resultados_Resiliencia_Table();
+        $wp_list_table->prepare_items(NULL);
         $variables = array(
             "%TITLE%",
         );
         $values = array(
             $title,
         );
-		print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
+        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
+        render_table_resultados($wp_list_table);
 	}
 	
+}
+
+function render_table_resultados($instance) {
+    print '<div id="poststuff">';
+    print '<div id="post-body" class="metabox-holder columns-2">';
+    print '<div id="post-body-content">';
+    print '<div class="meta-box-sortables ui-sortable">';
+    print '<form method="post">';
+    $instance->display();
+    print '</form>';
+    print '</div>';
+    print '</div>';
+    print '</div>';
+    print '<br class="clear">';
+    print '</div>';
+    print '</div>';
 }
 
 function set_screen( $status, $option, $value ) {
