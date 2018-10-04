@@ -49,13 +49,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
             $organizacion = get_users(
                 array(
                     'role' => 'empresa',
-                    'meta_query' => array(
-                        array(
-                            'key' => 'hash',
-                            'value' => $_GET['org_id'],
-                            'compare' => '=='
-                        )
-                    )
+                    'hash' => $_GET['org_id'],
                 )
             )[0];
             echo $organizacion;
