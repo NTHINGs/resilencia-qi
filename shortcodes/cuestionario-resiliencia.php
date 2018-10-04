@@ -72,6 +72,8 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
 
             $cuestionario = $wpdb->insert_id;
 
+            echo $cuestionario;
+
             $resultados_table_name = $wpdb->prefix . "resiliencia_resultados";
             for ($q = 1; $q <= 48; $q++){
                 if (isset($_POST["pregunta_" . $q])){
