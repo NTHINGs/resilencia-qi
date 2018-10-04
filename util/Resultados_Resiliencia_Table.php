@@ -160,8 +160,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$this->process_bulk_action();
 	  
 		$per_page     = $this->get_items_per_page( 'resultados_per_page', 10 );
-		print 'ESTOY AQUI';
 		$current_page = $this->get_pagenum();
+		print 'ESTOY AQUI';
 		$total_items  = self::record_count();
 	  
 		$this->set_pagination_args( [
