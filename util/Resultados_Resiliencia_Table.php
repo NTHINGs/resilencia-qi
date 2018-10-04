@@ -44,7 +44,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         foreach($cuestionarios as $key => $row) {
 			// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 			array_push($resultados, get_resultados($row->id));
-        }
+		}
+		
+		return $cuestionarios;
 	}
 
 	public static function record_count() {
