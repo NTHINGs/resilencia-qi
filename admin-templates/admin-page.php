@@ -29,40 +29,50 @@ function resiliencia_qi_admin() {
 }
 function render_resiliencia_qi_admin() {
     global $title;
+    $exampleListTable = new Resultados_Resiliencia_Table();
+    $exampleListTable->prepare_items();
+    ?>
+        <div class="wrap">
+            <div id="icon-users" class="icon32"></div>
+            <h2><?php echo $title; ?></h2>
+            <?php $exampleListTable->display(); ?>
+        </div>
+    <?php
+    // global $title;
 	
-	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
-        // Render pagina de organizacion
+	// if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
+    //     // Render pagina de organizacion
         
-        $wp_list_table = new Resultados_Resiliencia_Table();
+    //     $wp_list_table = new Resultados_Resiliencia_Table();
         
-        $wp_list_table->prepare_items();
-        $variables = array(
-            "%TITLE%",
-            "%SITE_URL%",
-            "%HASH%",
-        );
-        $values = array(
-            $title,
-            get_site_url(),
-            get_user_hash(),
-        );
+    //     $wp_list_table->prepare_items();
+    //     $variables = array(
+    //         "%TITLE%",
+    //         "%SITE_URL%",
+    //         "%HASH%",
+    //     );
+    //     $values = array(
+    //         $title,
+    //         get_site_url(),
+    //         get_user_hash(),
+    //     );
         
-        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        render_table_resultados($wp_list_table);
+    //     print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+    //     render_table_resultados($wp_list_table);
         
-	} elseif (current_user_can('resiliencia_admin')) {
-        // Render pagina de todas las organizaciones
-        $wp_list_table = new Resultados_Resiliencia_Table();
-        $wp_list_table->prepare_items();
-        $variables = array(
-            "%TITLE%",
-        );
-        $values = array(
-            $title,
-        );
-        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
-        render_table_resultados($wp_list_table);
-	}
+	// } elseif (current_user_can('resiliencia_admin')) {
+    //     // Render pagina de todas las organizaciones
+    //     $wp_list_table = new Resultados_Resiliencia_Table();
+    //     $wp_list_table->prepare_items();
+    //     $variables = array(
+    //         "%TITLE%",
+    //     );
+    //     $values = array(
+    //         $title,
+    //     );
+    //     print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
+    //     render_table_resultados($wp_list_table);
+	// }
 	
 }
 
