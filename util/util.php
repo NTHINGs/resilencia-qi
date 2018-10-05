@@ -58,3 +58,83 @@ function get_resultados($cuestionario_id) {
 
     return $resultados;
 }
+
+function calcular_rango($grupo, $puntaje) {
+    $puntajes = array(
+        'autoestima' => array(
+            'Alto' => array(
+                'sup' => 10,
+                'inf' => 9,
+            ),
+            'Medio' => array(
+                'sup' => 6,
+                'inf' => 8,
+            ),
+            'Bajo' => array(
+                'sup' => 5,
+                'inf' => 0,
+            ),
+        ),
+        'empatia' => array(
+            'Alto' => array(
+                'sup' => 10,
+                'inf' => 8,
+            ),
+            'Medio' => array(
+                'sup' => 7,
+                'inf' => 5
+            ),
+            'Bajo' => array(
+                'sup' => 4,
+                'inf' => 0,
+            ),
+        ),
+        'autonomia' => array(
+            'Alto' => array(
+                'sup' => 10,
+                'inf' => 8,
+            ),
+            'Medio' => array(
+                'sup' => 7,
+                'inf' => 4
+            ),
+            'Bajo' => array(
+                'sup' => 3,
+                'inf' => 0,
+            ),
+        ),
+        'humor' => array(
+            'Alto' => array(
+                'sup' => 10,
+                'inf' => 7,
+            ),
+            'Medio' => array(
+                'sup' => 6,
+                'inf' => 4
+            ),
+            'Bajo' => array(
+                'sup' => 3,
+                'inf' => 0,
+            ),
+        ),
+        'creatividad' => array(
+            'Alto' => array(
+                'sup' => 8,
+                'inf' => 6,
+            ),
+            'Medio' => array(
+                'sup' => 5,
+                'inf' => 3
+            ),
+            'Bajo' => array(
+                'sup' => 2,
+                'inf' => 0,
+            ),
+        ),
+    );
+    foreach($puntajes[$grupo] as $rango => $limites) {
+        if($puntaje >= $limites['inf'] && $puntaje <= $limites['sup']) {
+            return $rango . ' (' . $puntaje . ')';
+        }
+    }
+}
