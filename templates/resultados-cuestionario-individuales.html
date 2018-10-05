@@ -29,14 +29,14 @@
 
 <script>
     var resultados = JSON.parse('%RESULTADOS%');
-    resultados.forEach(function (pregunta, index, array) {
+    Object.keys(resultados).forEach(function (key, index, array) {
         var background = '';
         if (index % 2 !== 0) {
             background = 'style="background: rgba(192,192,192,0.3);"';
         }
         var cell = '\
             <td ' + background + '>\
-                ' + pregunta + '\
+                ' + resultados[key] + '\
             </td>';
         $("#row").append(cell);
     });
