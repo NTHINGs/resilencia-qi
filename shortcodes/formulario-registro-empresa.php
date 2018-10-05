@@ -40,8 +40,8 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
     }
 
     function guardar_empresa() {
-        
         if ( isset( $_POST['submitted'] ) ) {
+            echo 'estoy aqui';
             $username = $_POST['username'];
             $password = $_POST['password'];
             $display_name = $_POST['display_name'];
