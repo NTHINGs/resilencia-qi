@@ -222,7 +222,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		}
 
 		if ( 'view' === $this->current_action() ) {
-			wp_redirect(admin_url('admin.php?page=cuestionario-resiliencia' . '&registro='. $_GET['registro']));
+			wp_redirect(admin_url('admin.php?page=resultados-individuales' . '&registro='. $_GET['registro']));
 			exit;
 		}
 	  
