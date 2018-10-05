@@ -98,7 +98,7 @@ function screen_option() {
 
 function render_resiliencia_resultados_individuales() {
     if(isset($_GET['registro'])){
-        echo '<a href="' . admin_url('admin.php?page=cuestionario-resiliencia') . '"><- Volver a la lista </a>'
+        echo '<a href="' . admin_url('admin.php?page=cuestionario-resiliencia') . '"><- Volver a la lista </a>';
         echo do_shortcode('[resultados-cuestionario cuestionario_id="' . $_GET['registro'] . '"]');
     } else {
         echo 'ERROR NO SE ESPECIFICO EL CUESTIONARIO PARA VER RESULTADOS';
