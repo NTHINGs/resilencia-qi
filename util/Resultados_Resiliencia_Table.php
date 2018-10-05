@@ -18,7 +18,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      */
     public function prepare_items($search ='', $admin) {
 		// Construir columnas
-        $columns = $this->get_columns();
+        $columns = $this->get_columns($admin);
         $hidden = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 		
@@ -47,7 +47,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    public function get_columns() {
+    public function get_columns($admin) {
         $columns = array(
 			'cb'     	   => '<input type="checkbox" />',
             'id'           => 'ID',
@@ -58,7 +58,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			'humor'        => 'Humor',
 			'creatividad'  => 'Creatividad',
 			'total'		   => 'Total',
-        );
+		);
+		
+		if($admin == true) {
+			array_push($columns, array('organizacion' => 'Organización'));
+		}
         return $columns;
 	}
 
@@ -149,6 +153,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			case 'humor':
 			case 'creatividad':
 			case 'total':
+			case 'organizacion':
                 return $item[ $column_name ];
 			default:
                 return print_r( $item, true ) ;
