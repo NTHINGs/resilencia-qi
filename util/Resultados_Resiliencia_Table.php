@@ -91,7 +91,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
     private function table_data($search='', $admin) {
 		global $wpdb;
 		$hash = get_user_hash();
-		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
+		$sql = "SELECT id, nombre, edad, fechaaplicacion, organizacion FROM {$wpdb->prefix}resiliencia_registros";
 		if(!empty($search) && $admin == false){
 			$sql .= " WHERE nombre LIKE '%{$search}%' AND organizacion='{$hash}'";
 		} elseif (empty($search) && $admin == false) {
@@ -108,6 +108,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
 			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
 			$data[$index]['total'] = calcular_total($resultados);
+
+			if($admin != true) {
+				unset($data[$index]['organizacion'])
+			}
 		}
         return $data;
 	}
