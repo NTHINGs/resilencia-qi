@@ -68,7 +68,7 @@ function render_table_resultados() {
     print '<form method="post">';
     $wp_list_table = new Resultados_Resiliencia_Table();
     $wp_list_table->prepare_items();
-    $instance->display();
+    $wp_list_table->display();
     print '</form>';
     print '</div>';
     print '</div>';
