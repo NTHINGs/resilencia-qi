@@ -109,19 +109,16 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Mixed
      */
-	function column_title( $item ) {
-		
+	function column_name( $item ) {
+		$title = '<strong>' . $item['nombre'] . '</strong>';
+	  
 		$actions = [
-			'delete' => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ))
+		  'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>',
+			$_REQUEST['page'], 'delete', $item['id'] )
 		];
-		
-		return sprintf(
-            '%1$s %3$s',
-            $item['nombre'],
-            $item['id'],
-            $this->row_actions($actions)
-        );
-	}
+	  
+		return $title . $this->row_actions( $actions );
+	  }
     /**
      * Define what data to show on each column of the table
      *
