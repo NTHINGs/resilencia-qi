@@ -66,15 +66,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		print $sql;
-
 		$cuestionarios = $wpdb->get_results($sql);
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
 		// }
-
-		 print print_r( $cuestionarios );
 		
 		return $cuestionarios;
 	}
@@ -177,6 +173,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	  
 		// if($this->hash == 'no') {
 			$this->items = self::get_resultados_all_org( $per_page, $current_page );
+			
+			print print_r( $this->items );
 		// } else {
 			// $this->items = self::get_resultados_por_org( $per_page, $current_page );
 		// }
