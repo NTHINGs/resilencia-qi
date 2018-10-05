@@ -12,20 +12,25 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 
 class Resultados_Resiliencia_Table extends WP_List_Table {
 	 /**
-     * Prepare the items for the table to process
+     * Metodo para preparar la informacion de la tabla
      *
      * @return Void
      */
-    public function prepare_items()
-    {
+    public function prepare_items() {
+		// Construir columnas
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();
-        $sortable = $this->get_sortable_columns();
+		$sortable = $this->get_sortable_columns();
+		
+		// Traer informacion y ordenarla
         $data = $this->table_data();
 		usort( $data, array( &$this, 'sort_data' ) );
 		$this->_column_headers = array($columns, $hidden, $sortable);
-		/** Process bulk action */
+
+		/** Acciones en lote */
 		$this->process_bulk_action();
+
+		// Paginacion
         $perPage = $this->get_items_per_page( 'resultados_per_page', 10 );
         $currentPage = $this->get_pagenum();
         $totalItems = count($data);
@@ -35,9 +40,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         ) );
         $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
         $this->items = $data;
-    }
+	}
+	
     /**
-     * Override the parent columns method. Defines the columns to use in your listing table
+	 * Sobreescribir el metodo padre para las columnas. Define las columnas utilizadas para la tabla
      *
      * @return Array
      */
@@ -55,24 +61,18 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         );
         return $columns;
 	}
-	public function get_bulk_actions() {
-		$actions = [
-			'bulk-delete' => 'Eliminar'
-		];
-		
-		return $actions;
-	}
+
     /**
-     * Define which columns are hidden
+     * Definir las columnas ocultas
      *
      * @return Array
      */
-    public function get_hidden_columns()
-    {
+    public function get_hidden_columns() {
         return array();
-    }
+	}
+	
     /**
-     * Define the sortable columns
+     * Definir las columnas "sortable"
      *
      * @return Array
      */
@@ -81,9 +81,10 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			'id' => array( 'id', true ),
 			'nombre' => array('nombre', false)
 		);
-    }
+	}
+	
     /**
-     * Get the table data
+     * Construir datos de la tabla
      *
      * @return Array
      */
@@ -103,6 +104,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         return $data;
 	}
 	
+	/**
+     * Construir nombres de columnas
+     *
+     * @return Mixed
+     */
 	function column_name( $item ) {
 		// create a nonce
 		$delete_nonce = wp_create_nonce( 'resiliencia_delete_registro' );
@@ -170,6 +176,39 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         return -$result;
 	}
 
+	/**
+     * Columna para seleccionar multiples filas
+     *
+     * @return String
+     */
+	function column_cb( $item ) {
+		return sprintf(
+		  '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['id']
+		);
+	}
+
+	/**
+     * Mensaje para cuando no hay datos
+     *
+     * @return Mixed
+     */
+	public function no_items() {
+		echo 'Nadie ha contestado aún.';
+	}
+
+	/**
+     * Definir acciones en lote
+     *
+     * @return Mixed
+     */
+	public function get_bulk_actions() {
+		$actions = [
+			'bulk-delete' => 'Eliminar'
+		];
+		
+		return $actions;
+	}
+
 	public static function delete_registro( $id ) {
 		global $wpdb;
 		
@@ -177,15 +216,6 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			"{$wpdb->prefix}resiliencia_registros",
 			[ 'id' => $id ],
 			[ '%d' ]
-		);
-	}
-	public function no_items() {
-		echo 'Nadie ha contestado aún.';
-	}
-
-	function column_cb( $item ) {
-		return sprintf(
-		  '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['id']
 		);
 	}
 	
