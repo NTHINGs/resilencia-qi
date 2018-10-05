@@ -150,3 +150,11 @@ function calcular_rango($grupo, $puntaje) {
         }
     }
 }
+
+function calcular_total($resultados) {
+    $total = 0;
+    foreach ($resultados as $resultado) {
+        $total += (int)$resultado;
+    }
+    return $total;
+}

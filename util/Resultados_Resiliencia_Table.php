@@ -51,6 +51,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			'autonomia'    => 'Autonomía',
 			'humor'        => 'Humor',
 			'creatividad'  => 'Creatividad',
+			'total'		   => 'Total',
         );
         return $columns;
 	}
@@ -97,6 +98,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
 			$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
 			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+			$data[$index]['total'] = calcular_total($resultados);
 		}
         return $data;
 	}
@@ -135,6 +137,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			case 'autonomia':
 			case 'humor':
 			case 'creatividad':
+			case 'total':
                 return $item[ $column_name ];
 			default:
                 return print_r( $item, true ) ;
