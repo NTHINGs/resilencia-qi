@@ -37,7 +37,7 @@
                     <h3>Preguntas</h3>
                 </div>
                 <div class="container-fluid pb-5">
-                    <div id="preguntas" class="row border-bottom"></div>
+                    <div id="preguntas" class="row"></div>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
@@ -50,18 +50,24 @@
 <script>
     jQuery(document).ready(function ($) {
         var preguntas = JSON.parse('%PREGUNTAS%');
-        preguntas.forEach(function (pregunta) {
+        preguntas.forEach(function (pregunta, index) {
+            var background = '';
+            if (index % 2 === 0) {
+                background = 'style="background-color: rgba(255,255,255,0.5);" ';
+            }
             var div = '\
-            <div class="col-10 pb-2">\
-                <label for="pregunta_' + pregunta.id + '">' + pregunta.pregunta + '</label> \
-            </div>\
-            <div class="col-1 form-check border-bottom">\
-                <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_si" value="S">\
-                <label class="form-check-label" for="pregunta_' + pregunta.id + '_si">SI</label>\
-            </div>\
-            <div class="col-1 form-check border-bottom">\
-                <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_no" value="N">\
-                <label class="form-check-label" for="pregunta_' + pregunta.id + '_no">NO</label>\
+            <div ' + background + 'class="col-12">\
+                <div class="col-10 pb-2 border-bottom">\
+                    <label for="pregunta_' + pregunta.id + '">' + pregunta.pregunta + '</label> \
+                </div>\
+                <div class="col-1 form-check border-bottom">\
+                    <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_si" value="S">\
+                    <label class="form-check-label" for="pregunta_' + pregunta.id + '_si">SI</label>\
+                </div>\
+                <div class="col-1 form-check border-bottom">\
+                    <input class="form-check-input" type="radio" name="pregunta_' + pregunta.id + '" id="pregunta_' + pregunta.id + '_no" value="N">\
+                    <label class="form-check-label" for="pregunta_' + pregunta.id + '_no">NO</label>\
+                </div>\
             </div>';
             $("#preguntas").append(div);
         });
