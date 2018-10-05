@@ -62,19 +62,12 @@ function render_resiliencia_qi_admin() {
 
 function render_table_resultados() {
     print '<div id="poststuff">';
-    print '<div id="post-body" class="metabox-holder columns-2">';
-    print '<div id="post-body-content">';
-    print '<div class="meta-box-sortables ui-sortable">';
+
     print '<form method="post">';
     $wp_list_table = new Resultados_Resiliencia_Table();
     $wp_list_table->prepare_items();
     $wp_list_table->display();
     print '</form>';
-    print '</div>';
-    print '</div>';
-    print '</div>';
-    print '<br class="clear">';
-    print '</div>';
     print '</div>';
 }
 
