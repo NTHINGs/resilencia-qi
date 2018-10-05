@@ -75,11 +75,11 @@ function render_table_resultados() {
     print '<form method="post">';
     $wp_list_table = new Resultados_Resiliencia_Table();
     if( isset($_POST['s']) ){
-        $mailQueue->prepare_items($_POST['s']);
+        $wp_list_table->prepare_items($_POST['s']);
     } else {
-        $mailQueue->prepare_items();
+        $wp_list_table->prepare_items();
     }
-    $mailQueue->search_box( 'search', 'search_id' ); 
+    $wp_list_table->search_box( 'search', 'search_id' ); 
     $wp_list_table->display();
     print '</form>';
     print '</div>';
