@@ -38,7 +38,9 @@
             <td ' + background + '>\
                 ' + resultado + '\
             </td>';
-        $("#row").append(cell);
+
+        var row = document.getElementById('row');
+        row.innerHTML += cell;
     });
     var ctx = document.getElementById("resultados").getContext("2d");
     ctx.canvas.height = 600;
