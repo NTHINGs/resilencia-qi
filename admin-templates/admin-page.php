@@ -77,7 +77,7 @@ function render_table_resultados($admin) {
     if( isset($_POST['s']) ){
         $wp_list_table->prepare_items($_POST['s'], $admin);
     } else {
-        $wp_list_table->prepare_items($admin);
+        $wp_list_table->prepare_items(null, $admin);
     }
     $wp_list_table->search_box( 'Buscar', 'search_id' ); 
     $wp_list_table->display();
