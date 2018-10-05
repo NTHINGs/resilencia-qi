@@ -52,8 +52,7 @@
         var preguntas = JSON.parse('%PREGUNTAS%');
         preguntas.forEach(function (pregunta, index, array) {
             var background = '';
-            console.log(index % 2);
-            if (index % 2 === 0) {
+            if (index % 2 !== 0) {
                 background = 'style="background: rgba(192,192,192,0.3);" ';
             }
             var div = '\
