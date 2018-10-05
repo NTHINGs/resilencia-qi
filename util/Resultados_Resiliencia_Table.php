@@ -66,7 +66,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		$cuestionarios = $wpdb->get_results($sql);
+		$cuestionarios = $wpdb->get_results( $sql, 'ARRAY_A' );
         // foreach($cuestionarios as $key => $row) {
 		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		// 	array_push($resultados, get_resultados($row->id));
