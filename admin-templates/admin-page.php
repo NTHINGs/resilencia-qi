@@ -32,10 +32,6 @@ function render_resiliencia_qi_admin() {
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
-        
-        $wp_list_table = new Resultados_Resiliencia_Table();
-        
-        $wp_list_table->prepare_items();
         $variables = array(
             "%TITLE%",
             "%SITE_URL%",
@@ -48,12 +44,10 @@ function render_resiliencia_qi_admin() {
         );
         
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        render_table_resultados($wp_list_table);
+        render_table_resultados();
         
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
-        $wp_list_table = new Resultados_Resiliencia_Table();
-        $wp_list_table->prepare_items();
         $variables = array(
             "%TITLE%",
         );
@@ -61,18 +55,18 @@ function render_resiliencia_qi_admin() {
             $title,
         );
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
-        render_table_resultados($wp_list_table);
+        render_table_resultados();
 	}
 	
 }
 
-function render_table_resultados($instance) {
+function render_table_resultados() {
     print '<div id="poststuff">';
     print '<div id="post-body" class="metabox-holder columns-2">';
     print '<div id="post-body-content">';
     print '<div class="meta-box-sortables ui-sortable">';
     print '<form method="post">';
-    $instance->display();
+    $wp_list_table = new Resultados_Resiliencia_Table();
     print '</form>';
     print '</div>';
     print '</div>';
