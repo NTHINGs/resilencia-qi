@@ -216,14 +216,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 			self::delete_registro( absint( $_GET['registro'] ) );
-	  
-			wp_redirect( esc_url( add_query_arg() ) );
-			exit();
+	
+			exit(wp_redirect( esc_url( add_query_arg() ) ));
 		}
 
 		if ( 'view' === $this->current_action() ) {
-			wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') )));
-			exit();
+			exit(wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ))));
 		}
 	  
 		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
@@ -236,8 +234,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			self::delete_registro( $id );
 		  }
 	  
-		  wp_redirect( esc_url( add_query_arg() ) );
-		  exit();
+		  exit(wp_redirect( esc_url( add_query_arg() ) ));
 		}
 	}
 }
