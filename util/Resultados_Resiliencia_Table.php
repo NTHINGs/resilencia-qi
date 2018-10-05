@@ -129,7 +129,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
     private function sort_data( $a, $b )
     {
         // Set defaults
-        $orderby = 'nombre';
+        $orderby = 'id';
         $order = 'asc';
         // If orderby is set, use this as the sort column
         if(!empty($_GET['orderby']))
