@@ -140,7 +140,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			case 'humor':
 			case 'creatividad':
                 return $item[ $column_name ];
-            default:
+			default:
+				print $item;
                 return print_r( $item, true ) ;
         }
     }
