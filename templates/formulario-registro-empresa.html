@@ -60,7 +60,9 @@
             if ($('#display_name').val() && $('#username').val() && $('#email').val() && $('#password').val()) {
                 // Si los inputs requeridos tienen valor. Enviar el formulario
                 $('#form_hint').hide();
-                $("#form_registro").append('<input type="text" value="true" name="submitted" />');
+                if(!$("#submitted")) {
+                    $("#form_registro").append('<input id="submitted" type="text" value="true" name="submitted" />');
+                }
                 $("#form_registro").submit();
             } else {
                 $('#form_hint').show();
