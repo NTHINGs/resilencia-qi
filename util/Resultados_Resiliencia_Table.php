@@ -95,11 +95,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		foreach($data as $index => $row) {
 			$resultados = get_resultados($row['id']);
-			$data[$index]['autoestima'] = $resultados[0];
-			$data[$index]['empatia'] = $resultados[1];
-			$data[$index]['autonomia'] = $resultados[2];
-			$data[$index]['humor'] = $resultados[3];
-			$data[$index]['creatividad'] = $resultados[4];
+			$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+			$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+			$data[$index]['humor'] =calcular_rango('humor', (int)$resultados[3]);
+			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
 		}
         return $data;
 	}
