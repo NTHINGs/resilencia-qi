@@ -223,8 +223,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 
 		if ( 'view' === $this->current_action() ) {
 
-			print admin_url('admin.php?page=resultados-individuales' . '%26registro='. $_GET['registro']); 
-			wp_redirect(admin_url('admin.php?page=resultados-individuales' . '%26registro='. $_GET['registro']));
+			print add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ); 
+			wp_redirect(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ));
 			exit;
 		}
 	  
