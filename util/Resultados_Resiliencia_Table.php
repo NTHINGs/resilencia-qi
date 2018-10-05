@@ -226,17 +226,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			exit;
 		}
 	  
-		// If the delete bulk action is triggered
 		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
 			 || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
 		) {
 	  
 		  $delete_ids = esc_sql( $_POST['bulk-delete'] );
 	  
-		  // loop over the array of record IDs and delete them
 		  foreach ( $delete_ids as $id ) {
 			self::delete_registro( $id );
-	  
 		  }
 	  
 		  wp_redirect( esc_url( add_query_arg() ) );
