@@ -90,10 +90,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		foreach($data as $index => $row) {
-			foreach($row as $key => $value) {
-				print $key;
-				print $value;
-			}
+			print $row->id;
 			
 		}
 		// get_resultados($cuestionario_id)
