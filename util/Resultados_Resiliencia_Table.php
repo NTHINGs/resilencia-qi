@@ -86,8 +86,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
     private function table_data()
     {
         global $wpdb;
-		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros";
+		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
+		// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
+		foreach($data as $key => $row) {
+			print $key;
+			print_r($row);
+		}
+		// get_resultados($cuestionario_id)
         return $data;
 	}
 	
