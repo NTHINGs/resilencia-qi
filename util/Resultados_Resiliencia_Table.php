@@ -152,18 +152,15 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         $orderby = 'id';
         $order = 'asc';
         // If orderby is set, use this as the sort column
-        if(!empty($_GET['orderby']))
-        {
+        if(!empty($_GET['orderby'])) {
             $orderby = $_GET['orderby'];
         }
         // If order is set use this as the order
-        if(!empty($_GET['order']))
-        {
+        if(!empty($_GET['order'])) {
             $order = $_GET['order'];
         }
         $result = $a[$orderby] - $b[$orderby];
-        if($order === 'asc')
-        {
+        if($order === 'asc') {
             return $result;
         }
         return -$result;

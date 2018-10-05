@@ -1,10 +1,45 @@
 <!-- PHP VARIABLES -->
 <!-- DATA = Arreglo con los resultados del cuestionario -->
 <div id="result-container" style="width: 100%;">
+    <table>
+        <thead>
+            <th>
+                Autoestima
+            </th>
+            <th>
+                Empatía
+            </th>
+            <th>
+                Autonomía
+            </th>
+            <th>
+                Humor
+            </th>
+            <th>
+                Creatividad
+            </th>
+        </thead>
+        <tbody>
+            <tr id="row">
+            </tr>
+        </tbody>
+    </table>
     <canvas id="resultados" width="400" height="400"></canvas>
 </div>
 
 <script>
+    var resultados = JSON.parse('%RESULTADOS%');
+    resultados.forEach(function (pregunta, index, array) {
+        var background = '';
+        if (index % 2 !== 0) {
+            background = 'style="background: rgba(192,192,192,0.3);"';
+        }
+        var cell = '\
+            <td ' + background + '>\
+                ' + pregunta + '\
+            </td>';
+        $("#row").append(cell);
+    });
     var ctx = document.getElementById("resultados").getContext("2d");
     ctx.canvas.height = 600;
     ctx.canvas.width = document.getElementById('result-container').innerWidth;

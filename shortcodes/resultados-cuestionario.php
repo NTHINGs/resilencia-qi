@@ -53,11 +53,19 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
     function resultados_por_cuestionario_resiliencia($cuestionario_id) {
         $variables = array(
             '%DATA%',
+            '%RESULTADOS%'
         );
-
+        $data = array();
         $resultados = get_resultados($cuestionario_id);
+        $data['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+        $data['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+        $data['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+        $data['humor'] = calcular_rango('humor', (int)$resultados[3]);
+        $data['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+        $data['total'] = calcular_total($resultados);
         $values = array(
             json_encode($resultados),
+            json_encode($data),
         );
         
         return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
