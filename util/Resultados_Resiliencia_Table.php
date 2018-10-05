@@ -110,7 +110,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Mixed
      */
 	function column_id( $item ) {
-		$title = '<strong>' . $item['nombre'] . '</strong>';
+		$title = '<strong>' . $item['id'] . '</strong>';
 	  
 		$actions = [
 		  'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>',
