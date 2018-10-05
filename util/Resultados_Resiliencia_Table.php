@@ -114,7 +114,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			$data[$index]['total'] = calcular_total($resultados);
 
 			if($admin != true) {
-				unset($data[$index]['organizacion'])
+				unset($data[$index]['organizacion']);
 			}
 		}
         return $data;
