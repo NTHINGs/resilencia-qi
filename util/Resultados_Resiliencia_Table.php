@@ -23,7 +23,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         $sortable = $this->get_sortable_columns();
         $data = $this->table_data();
         usort( $data, array( &$this, 'sort_data' ) );
-        $perPage = 10;
+        $perPage = $this->get_items_per_page( 'resultados_per_page', 10 );
         $currentPage = $this->get_pagenum();
         $totalItems = count($data);
         $this->set_pagination_args( array(
