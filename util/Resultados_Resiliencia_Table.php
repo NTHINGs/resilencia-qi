@@ -47,11 +47,11 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			'cb'     	   => '<input type="checkbox" />',
             'id'           => 'ID',
 			'nombre'       => 'Nombre',
-			'autoestima'   => 'Autoestima';
-			'empatia'      => 'Empatía';
-			'autonomia'    => 'Autonomía';
-			'humor'        => 'Humor';
-			'creatividad'  => 'Creatividad';
+			'autoestima'   => 'Autoestima',
+			'empatia'      => 'Empatía',
+			'autonomia'    => 'Autonomía',
+			'humor'        => 'Humor',
+			'creatividad'  => 'Creatividad',
         );
         return $columns;
 	}
@@ -93,7 +93,6 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         global $wpdb;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
-		// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		foreach($data as $index => $row) {
 			$resultados = get_resultados($row['id']);
 			$data[$index]['autoestima'] = $resultados[0];
