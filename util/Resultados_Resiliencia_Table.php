@@ -16,14 +16,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Void
      */
-    public function prepare_items() {
+    public function prepare_items($search ='') {
 		// Construir columnas
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 		
 		// Traer informacion y ordenarla
-        $data = $this->table_data();
+        $data = $this->table_data($search);
 		usort( $data, array( &$this, 'sort_data' ) );
 		$this->_column_headers = array($columns, $hidden, $sortable);
 
@@ -88,9 +88,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    private function table_data() {
+    private function table_data($search='') {
         global $wpdb;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
+		if(!empty($search)){
+			$sql .= " AND (nombre LIKE '%{$search}%')";
+		}
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		foreach($data as $index => $row) {
 			$resultados = get_resultados($row['id']);
