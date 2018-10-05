@@ -134,7 +134,16 @@ function calcular_rango($grupo, $puntaje) {
     );
     foreach($puntajes[$grupo] as $rango => $limites) {
         if($puntaje >= $limites['inf'] && $puntaje <= $limites['sup']) {
-            return $rango . ' (' . $puntaje . ')';
+            $color = "#000";
+            switch($rango) {
+                case 'Bajo':
+                    $color = '#dc3545';
+                case 'Medio':
+                    $color = '#007bff';
+                case 'Alto':
+                    $color = '#28a745';
+            }
+            return '<span style="color: ' . $color . '">' . $rango . ' (' . $puntaje . ')</span>';
         }
     }
 }
