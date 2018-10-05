@@ -57,12 +57,12 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         );
         $data = array();
         $resultados = get_resultados($cuestionario_id);
-        $data['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
-        $data['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
-        $data['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-        $data['humor'] = calcular_rango('humor', (int)$resultados[3]);
-        $data['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
-        $data['total'] = calcular_total($resultados);
+        array_push($data, calcular_rango('autoestima', (int)$resultados[0]));
+        array_push($data, calcular_rango('empatia', (int)$resultados[1]));
+        array_push($data, calcular_rango('autonomia', (int)$resultados[2]));
+        array_push($data, calcular_rango('humor', (int)$resultados[3]));
+        array_push($data, calcular_rango('creatividad', (int)$resultados[4]));
+        array_push($data, calcular_total($resultados));
         $values = array(
             json_encode($resultados),
             json_encode($data),
