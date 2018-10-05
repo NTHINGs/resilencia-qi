@@ -28,20 +28,6 @@
 </div>
 
 <script>
-    var resultadosJSON = JSON.parse(`%RESULTADOS%`);
-    resultadosJSON.forEach(function (resultado, index, array) {
-        var background = '';
-        if (index % 2 !== 0) {
-            background = 'style=\"background: rgba(192,192,192,0.3);\"';
-        }
-        var cell = '\
-            <td ' + background + '>\
-                ' + resultado + '\
-            </td>';
-
-        var row = document.getElementById('row');
-        row.innerHTML += cell;
-    });
     var ctx = document.getElementById("resultados").getContext("2d");
     ctx.canvas.height = 600;
     ctx.canvas.width = document.getElementById('result-container').innerWidth;
@@ -78,5 +64,20 @@
                 }]
             }
         }
+    });
+
+    var resultadosJSON = JSON.parse(`%RESULTADOS%`);
+    resultadosJSON.forEach(function (resultado, index, array) {
+        var background = '';
+        if (index % 2 !== 0) {
+            background = 'style=\"background: rgba(192,192,192,0.3);\"';
+        }
+        var cell = '\
+            <td ' + background + '>\
+                ' + resultado + '\
+            </td>';
+
+        var row = document.getElementById('row');
+        row.innerHTML += cell;
     });
 </script>
