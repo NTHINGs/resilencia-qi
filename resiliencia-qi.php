@@ -65,6 +65,12 @@ function resiliencia_qi_init() {
 	wp_enqueue_script('chart', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js', array(), null, false);
 }
 
+add_action( 'admin_enqueue_scripts', 'resiliencia_qi_admin_init' );
+
+function resiliencia_qi_admin_init() {
+	wp_enqueue_script('chart', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js', array(), null, false);
+}
+
 // Crear Tablas en MySql
 function resiliencia_qi_create_plugin_database() {
     global $table_prefix, $wpdb;
