@@ -46,7 +46,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         $columns = array(
 			'cb'     	   => '<input type="checkbox" />',
             'id'           => 'ID',
-            'nombre'       => 'Nombre'
+			'nombre'       => 'Nombre',
+			'autoestima'   => 'Autoestima';
+			'empatia'      => 'Empatía';
+			'autonomia'    => 'Autonomía';
+			'humor'        => 'Humor';
+			'creatividad'  => 'Creatividad';
         );
         return $columns;
 	}
@@ -90,10 +95,13 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
 		foreach($data as $index => $row) {
-			print $row['id'];
-			
+			$resultados = get_resultados($row['id']);
+			$data[$index]['autoestima'] = $resultados[0];
+			$data[$index]['empatia'] = $resultados[1];
+			$data[$index]['autonomia'] = $resultados[2];
+			$data[$index]['humor'] = $resultados[3];
+			$data[$index]['creatividad'] = $resultados[4];
 		}
-		// get_resultados($cuestionario_id)
         return $data;
 	}
 	
@@ -121,7 +129,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
     {
         switch( $column_name ) {
             case 'id':
-            case 'nombre':
+			case 'nombre':
+			case 'autoestima':
+			case 'empatia':
+			case 'autonomia':
+			case 'humor':
+			case 'creatividad':
                 return $item[ $column_name ];
             default:
                 return print_r( $item, true ) ;
