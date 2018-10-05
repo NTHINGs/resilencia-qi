@@ -113,8 +113,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$title = '<strong>' . $item['id'] . '</strong>';
 	  
 		$actions = [
-		  'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>',
-			$_REQUEST['page'], 'delete', $item['id'] )
+			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
+			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'] )
 		];
 	  
 		return $title . $this->row_actions( $actions );
@@ -215,20 +215,15 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	public function process_bulk_action() {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
-	  
-		  // In our file that handles the request, verify the nonce.
-		  $nonce = esc_attr( $_REQUEST['_wpnonce'] );
-	  
-		  if ( ! wp_verify_nonce( $nonce, 'resiliencia_delete_registro' ) ) {
-			die( 'Go get a life script kiddies' );
-		  }
-		  else {
 			self::delete_registro( absint( $_GET['registro'] ) );
 	  
 			wp_redirect( esc_url( add_query_arg() ) );
 			exit;
-		  }
-	  
+		}
+
+		if ( 'view' === $this->current_action() ) {
+			wp_redirect(add_query_arg( 'registro', $_GET['registro'], menu_page_url('resiliencia_resultados_individuales') ));
+			exit;
 		}
 	  
 		// If the delete bulk action is triggered

@@ -26,6 +26,15 @@ function resiliencia_qi_admin() {
 		'dashicons-universal-access'
     );
     add_action( "load-$hook", 'screen_option' );
+
+    add_submenu_page(
+        null,
+        'Resultados Individuales', //page title
+        'Resultados Individuales', //menu title
+        'resiliencia', //capability,
+        'resiliencia_resultados_individuales',//menu slug
+        'render_resiliencia_resultados_individuales' //callback function
+    );
 }
 function render_resiliencia_qi_admin() {
     global $title;
@@ -85,4 +94,12 @@ function screen_option() {
 	];
 
 	add_screen_option( $option, $args );
+}
+
+function render_resiliencia_resultados_individuales() {
+    if(isset($_GET['registro'])){
+        echo do_shortcode('[resultados-cuestionario cuestionario_id="' . $_GET['registro'] . '"]');
+    } else {
+        echo 'ERROR NO SE ESPECIFICO EL CUESTIONARIO PARA VER RESULTADOS';
+    }
 }
