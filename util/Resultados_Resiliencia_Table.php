@@ -141,7 +141,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         {
             $order = $_GET['order'];
         }
-        $result = strcmp( $a[$orderby], $b[$orderby] );
+        $result = $a[$orderby] - $b[$orderby];
         if($order === 'asc')
         {
             return $result;
