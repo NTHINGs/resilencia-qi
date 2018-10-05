@@ -138,10 +138,13 @@ function calcular_rango($grupo, $puntaje) {
             switch($rango) {
                 case 'Bajo':
                     $color = '#dc3545';
+                    break;
                 case 'Medio':
                     $color = '#007bff';
+                    break;
                 case 'Alto':
                     $color = '#28a745';
+                    break
             }
             return '<span style="color: ' . $color . ';">' . $rango . ' (' . $puntaje . ')</span>';
         }
