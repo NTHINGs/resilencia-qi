@@ -113,8 +113,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		$title = '<strong>' . $item['id'] . '</strong>';
 	  
 		$actions = [
-			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
-			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'] )
+			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
+			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'] )
 		];
 	  
 		return $title . $this->row_actions( $actions );
