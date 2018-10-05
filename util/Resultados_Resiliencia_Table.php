@@ -216,13 +216,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 			self::delete_registro( absint( $_GET['registro'] ) );
-	
-			exit(wp_redirect( esc_url( add_query_arg() ) ));
+			wp_redirect( esc_url( add_query_arg() ) );
+			exit;
 		}
 
 		if ( 'view' === $this->current_action() ) {
-			// exit(wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ))));
-			wp_redirect(admin_url('admin.php?page=resultados-individuales') );
+			wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') )));
 			exit;
 		}
 	  
@@ -230,13 +229,14 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			 || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
 		) {
 	  
-		  $delete_ids = esc_sql( $_POST['bulk-delete'] );
+			$delete_ids = esc_sql( $_POST['bulk-delete'] );
+		
+			foreach ( $delete_ids as $id ) {
+				self::delete_registro( $id );
+			}
 	  
-		  foreach ( $delete_ids as $id ) {
-			self::delete_registro( $id );
-		  }
-	  
-		  exit(wp_redirect( esc_url( add_query_arg() ) ));
+			wp_redirect( esc_url( add_query_arg() ) );
+			exit;
 		}
 	}
 }
