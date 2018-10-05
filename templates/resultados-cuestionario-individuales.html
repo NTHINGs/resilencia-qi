@@ -17,6 +17,9 @@
         <th>
             Creatividad
         </th>
+        <th>
+            Total
+        </th>
     </thead>
     <tbody>
         <tr id="row">
@@ -67,13 +70,9 @@
     });
 
     var resultadosJSON = JSON.parse(`%RESULTADOS%`);
-    resultadosJSON.forEach(function (resultado, index, array) {
-        var background = '';
-        if (index % 2 !== 0) {
-            background = 'style=\"background: rgba(192,192,192,0.3);\"';
-        }
+    resultadosJSON.forEach(function (resultado) {
         var cell = '\
-            <td ' + background + '>\
+            <td style="text-align: center;">\
                 ' + resultado + '\
             </td>';
 
