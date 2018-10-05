@@ -61,7 +61,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		);
 		
 		if($admin == true) {
-			array_push($columns, array('organizacion' => 'Organización'));
+			$columns['organizacion'] = 'Organización';
 		}
         return $columns;
 	}
