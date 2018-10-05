@@ -27,7 +27,8 @@
                     <small id="pass_hint" class="form-text"></small>
                 </div>
                 <div class="col-12">
-                    <button id="submit_button" class="btn btn-primary">Registrar Organización</button>
+                    <input id="submit_button" class="btn btn-primary" type="submit" name="submitted" value="Registrar Organización" />
+                    <!-- <button id="submit_button" class="btn btn-primary">Registrar Organización</button> -->
                     <small id="form_hint" class="form-text text-danger">Faltan campos requeridos.</small>
                 </div>
             </form>
@@ -55,19 +56,14 @@
             }
         });
 
-        $('#submit_button').click(function (e) {
-            e.preventDefault();
+        $( "#form_registro" ).submit(function( event ) {
             if ($('#display_name').val() && $('#username').val() && $('#email').val() && $('#password').val()) {
-                // Si los inputs requeridos tienen valor. Enviar el formulario
                 $('#form_hint').hide();
-                if(!$("#submitted")) {
-                    $("#form_registro").append('<input id="submitted" type="text" value="true" name="submitted" />');
-                }
-                $("#form_registro").submit();
-            } else {
-                $('#form_hint').show();
+                return;
             }
-
+            
+            $('#form_hint').show();
+            event.preventDefault();
         });
 
     });
