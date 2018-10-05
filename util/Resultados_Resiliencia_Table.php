@@ -109,7 +109,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Mixed
      */
-	function column_name( $item ) {
+	function column_title( $item ) {
 		// create a nonce
 		$delete_nonce = wp_create_nonce( 'resiliencia_delete_registro' );
 		
