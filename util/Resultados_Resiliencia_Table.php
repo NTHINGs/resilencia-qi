@@ -41,8 +41,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    public function get_columns()
-    {
+    public function get_columns() {
         $columns = array(
 			'cb'     	   => '<input type="checkbox" />',
             'id'           => 'ID',
@@ -76,8 +75,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    public function get_sortable_columns()
-    {
+    public function get_sortable_columns() {
         return array(
 			'id' => array( 'id', true ),
 			'nombre' => array('nombre', false)
@@ -88,8 +86,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    private function table_data()
-    {
+    private function table_data() {
         global $wpdb;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
@@ -98,7 +95,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 			$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
 			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-			$data[$index]['humor'] =calcular_rango('humor', (int)$resultados[3]);
+			$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
 			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
 		}
         return $data;
@@ -106,7 +103,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 	
 	function column_name( $item ) {
 		// create a nonce
-		$delete_nonce = wp_create_nonce( 'sp_delete_registro' );
+		$delete_nonce = wp_create_nonce( 'resiliencia_delete_registro' );
 		
 		$title = '<strong>' . $item['nombre'] . '</strong>';
 		
@@ -129,8 +126,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Mixed
      */
-    public function column_default( $item, $column_name )
-    {
+    public function column_default( $item, $column_name ) {
         switch( $column_name ) {
             case 'id':
 			case 'nombre':
@@ -141,7 +137,6 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 			case 'creatividad':
                 return $item[ $column_name ];
 			default:
-				print $item;
                 return print_r( $item, true ) ;
         }
     }
@@ -150,8 +145,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Mixed
      */
-    private function sort_data( $a, $b )
-    {
+    private function sort_data( $a, $b ) {
         // Set defaults
         $orderby = 'id';
         $order = 'asc';
@@ -199,7 +193,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		  // In our file that handles the request, verify the nonce.
 		  $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 	  
-		  if ( ! wp_verify_nonce( $nonce, 'sp_delete_registro' ) ) {
+		  if ( ! wp_verify_nonce( $nonce, 'resiliencia_delete_registro' ) ) {
 			die( 'Go get a life script kiddies' );
 		  }
 		  else {
