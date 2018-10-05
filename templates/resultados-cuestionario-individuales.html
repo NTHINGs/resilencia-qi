@@ -28,8 +28,8 @@
 </div>
 
 <script>
-    var resultados = JSON.parse(`%RESULTADOS%`);
-    resultados.forEach(function (resultado, index, array) {
+    var resultadosJSON = JSON.parse(`%RESULTADOS%`);
+    resultadosJSON.forEach(function (resultado, index, array) {
         var background = '';
         if (index % 2 !== 0) {
             background = 'style=\"background: rgba(192,192,192,0.3);\"';
