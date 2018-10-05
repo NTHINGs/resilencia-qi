@@ -110,13 +110,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Mixed
      */
 	function column_title( $item ) {
-		// create a nonce
-		$delete_nonce = wp_create_nonce( 'resiliencia_delete_registro' );
-		
-		$title = '<strong>' . $item['nombre'] . '</strong>';
 		
 		$actions = [
-			'delete' => sprintf( '<a href="?page=%s&action=%s&registro=%s&_wpnonce=%s">Eliminar</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ), $delete_nonce )
+			'delete' => sprintf( '<a href="?page=%s&action=%s&registro=%s">Eliminar</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ))
 		];
 		
 		return sprintf(
