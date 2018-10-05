@@ -11,215 +11,129 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 class Resultados_Resiliencia_Table extends WP_List_Table {
-	// public $hash;
-	/** Class constructor */
-	public function __construct() {
-		
-		// $this->hash = $hash;
-		parent::__construct( [
-			'singular' => 'Resultado', //singular name of the listed records
-			'plural'   => 'Resultados', //plural name of the listed records
-			'ajax'     => false //should this table support ajax?
+	/**
+     * Prepare the items for the table to process
+     *
+     * @return Void
+     */
+    public function prepare_items() {
+        $columns = $this->get_columns();
+        $hidden = $this->get_hidden_columns();
+        $sortable = $this->get_sortable_columns();
 
-		] );
+        $data = $this->table_data();
+        usort( $data, array( &$this, 'sort_data' ) );
 
-	}
+        $perPage = 10;
+        $currentPage = $this->get_pagenum();
+        $totalItems = count($data);
 
-	public static function get_resultados_por_org($per_page = 10, $page_number = 1) {
-		global $wpdb;
+        $this->set_pagination_args( array(
+            'total_items' => $totalItems,
+            'per_page'    => $perPage
+        ) );
 
-		$resultados = array();
-		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '$this->hash'";
-		
-		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
-		}
-	
-		$sql .= " LIMIT $per_page";
-	
-		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
+        $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
 
-		print $sql;
+        $this->_column_headers = array($columns, $hidden, $sortable);
+        $this->items = $data;
+    }
 
-		$cuestionarios = $wpdb->get_results($sql);
-        // foreach($cuestionarios as $key => $row) {
-		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
-		// 	array_push($resultados, get_resultados($row->id));
-		// }
+    /**
+     * Override the parent columns method. Defines the columns to use in your listing table
+     *
+     * @return Array
+     */
+    public function get_columns() {
+        $columns = array(
+            'id'          => 'ID',
+            'nombre'       => 'Title',
+        );
 
-		print_r( $cuestionarios );
-		
-		return $cuestionarios;
-	}
+        return $columns;
+    }
 
-	public static function get_resultados_all_org($per_page = 10, $page_number = 1) {
-		global $wpdb;
+    /**
+     * Define which columns are hidden
+     *
+     * @return Array
+     */
+    public function get_hidden_columns() {
+        return array();
+    }
+
+    /**
+     * Define the sortable columns
+     *
+     * @return Array
+     */
+    public function get_sortable_columns() {
+        return array(
+            'id' => array('id', false),
+            'nombre' => array('nombre', false),
+        );
+    }
+
+    /**
+     * Get the table data
+     *
+     * @return Array
+     */
+    private function table_data(){
+        global $wpdb;
 		$sql = "SELECT id, nombre FROM {$wpdb->prefix}resiliencia_registros";
-		
-		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
-		}
-	
-		$sql .= " LIMIT $per_page";
-	
-		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 
-		print $sql;
+		$data = $wpdb->get_results($sql);
+        return $data;
+    }
 
-		$cuestionarios = $wpdb->get_results($sql);
-        // foreach($cuestionarios as $key => $row) {
-		// 	// ['Autoestima', 'Empatía', 'Autonomía', 'Humor', 'Creatividad']
-		// 	array_push($resultados, get_resultados($row->id));
-		// }
+    /**
+     * Define what data to show on each column of the table
+     *
+     * @param  Array $item        Data
+     * @param  String $column_name - Current column name
+     *
+     * @return Mixed
+     */
+    public function column_default( $item, $column_name ) {
+        switch( $column_name ) {
+            case 'id':
+            case 'nombre':
+                return $item[ $column_name ];
 
-		 print print_r( $cuestionarios );
-		
-		return $cuestionarios;
-	}
+            default:
+                return print_r( $item, true ) ;
+        }
+    }
 
-	public static function record_count() {
-		global $wpdb;
-		print 'ESTOY AQUI';
-		// if($this->hash == 'no') {
-			$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros";
-		// } else {
-			// $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$this->hash}'";
-		// }
-		print $wpdb->get_var( $sql );
-		return $wpdb->get_var( $sql );
-	}
+    /**
+     * Allows you to sort the data by the variables set in the $_GET
+     *
+     * @return Mixed
+     */
+    private function sort_data( $a, $b ) {
+        // Set defaults
+        $orderby = 'id';
+        $order = 'asc';
 
-	public static function delete_customer( $id ) {
-		global $wpdb;
-		
-		$wpdb->delete(
-			"{$wpdb->prefix}resiliencia_registros",
-			[ 'id' => $id ],
-			[ '%d' ]
-		);
-	}
+        // If orderby is set, use this as the sort column
+        if(!empty($_GET['orderby'])) {
+            $orderby = $_GET['orderby'];
+        }
 
-	public function no_items() {
-		echo 'Nadie ha contestado aún.';
-	}
+        // If order is set use this as the order
+        if(!empty($_GET['order']))
+        {
+            $order = $_GET['order'];
+        }
 
-	function column_name( $item ) {
 
-		// create a nonce
-		$delete_nonce = wp_create_nonce( 'sp_delete_customer' );
-		
-		$title = '<strong>' . $item['nombre'] . '</strong>';
-		
-		$actions = [
-			'delete' => sprintf( '<a href="?page=%s&action=%s&customer=%s&_wpnonce=%s">Delete</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item['id'] ), $delete_nonce )
-		];
-		
-		return $title . $this->row_actions( $actions );
-	}
+        $result = strcmp( $a[$orderby], $b[$orderby] );
 
-	public function column_default( $item, $column_name ) {
-		switch ( $column_name ) {
-			case 'id':
-			case 'nombre':
-			return $item[ $column_name ];
-			default:
-			return print_r( $item, true ); //Show the whole array for troubleshooting purposes
-		}
-	}
+        if($order === 'asc') {
+            return $result;
+        }
 
-	function column_cb( $item ) {
-		return sprintf(
-		  '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['id']
-		);
-	}
-	
-	function get_columns() {
-		$columns = [
-			'cb'     => '<input type="checkbox" />',
-			'id'     => __('ID'),
-			'nombre' => __('Nombre'),
-		];
-		
-		return $columns;
-	}
-
-	public function get_sortable_columns() {
-		$sortable_columns = array(
-		  'id' => array( 'id', true ),
-		  'nombre' => array( 'nombre', false ),
-		);
-	  
-		return $sortable_columns;
-	}
-
-	public function get_bulk_actions() {
-		$actions = [
-			'bulk-delete' => 'Eliminar'
-		];
-		
-		return $actions;
-	}
-
-	public function prepare_items() {
-		$this->_column_headers = $this->get_column_info();
-	  
-		/** Process bulk action */
-		$this->process_bulk_action();
-	  
-		$per_page     = $this->get_items_per_page( 'resultados_per_page', 10 );
-		$current_page = $this->get_pagenum();
-		$total_items  = self::record_count();
-	  
-		$this->set_pagination_args( [
-		  'total_items' => $total_items, //WE have to calculate the total number of items
-		  'per_page'    => $per_page //WE have to determine how many items to show on a page
-		] );
-	  
-		// if($this->hash == 'no') {
-			$this->items = self::get_resultados_all_org( $per_page, $current_page );
-		// } else {
-			// $this->items = self::get_resultados_por_org( $per_page, $current_page );
-		// }
-	}
-		
-
-	public function process_bulk_action() {
-
-		//Detect when a bulk action is being triggered...
-		if ( 'delete' === $this->current_action() ) {
-	  
-		  // In our file that handles the request, verify the nonce.
-		  $nonce = esc_attr( $_REQUEST['_wpnonce'] );
-	  
-		  if ( ! wp_verify_nonce( $nonce, 'sp_delete_customer' ) ) {
-			die( 'Go get a life script kiddies' );
-		  }
-		  else {
-			self::delete_customer( absint( $_GET['customer'] ) );
-	  
-			wp_redirect( esc_url( add_query_arg() ) );
-			exit;
-		  }
-	  
-		}
-	  
-		// If the delete bulk action is triggered
-		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
-			 || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
-		) {
-	  
-		  $delete_ids = esc_sql( $_POST['bulk-delete'] );
-	  
-		  // loop over the array of record IDs and delete them
-		  foreach ( $delete_ids as $id ) {
-			self::delete_customer( $id );
-	  
-		  }
-	  
-		  wp_redirect( esc_url( add_query_arg() ) );
-		  exit;
-		}
-	}
+        return -$result;
+    }
 }
