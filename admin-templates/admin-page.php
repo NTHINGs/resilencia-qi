@@ -53,7 +53,7 @@ function render_resiliencia_qi_admin() {
         );
         
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        render_table_resultados();
+        render_table_resultados(false);
         
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
@@ -64,20 +64,20 @@ function render_resiliencia_qi_admin() {
             $title,
         );
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
-        render_table_resultados();
+        render_table_resultados(true);
 	}
 	
 }
 
-function render_table_resultados() {
+function render_table_resultados($admin) {
     print '<div id="poststuff">';
 
     print '<form method="post">';
     $wp_list_table = new Resultados_Resiliencia_Table();
     if( isset($_POST['s']) ){
-        $wp_list_table->prepare_items($_POST['s']);
+        $wp_list_table->prepare_items($_POST['s'], $admin);
     } else {
-        $wp_list_table->prepare_items();
+        $wp_list_table->prepare_items($admin);
     }
     $wp_list_table->search_box( 'Buscar', 'search_id' ); 
     $wp_list_table->display();
