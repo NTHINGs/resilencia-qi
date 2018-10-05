@@ -146,7 +146,7 @@ function calcular_rango($grupo, $puntaje) {
                     $color = '#28a745';
                     break;
             }
-            return "<span style='color: " . $color . ";'>' . $rango . ' (' . $puntaje . ')</span>";
+            return "<span style='color: " . $color . ";'>" . $rango . " (" . $puntaje . ")</span>";
         }
     }
 }
