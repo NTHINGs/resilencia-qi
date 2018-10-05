@@ -32,7 +32,7 @@ function resiliencia_qi_admin() {
         'Resultados Individuales', //page title
         'Resultados Individuales', //menu title
         'resiliencia', //capability,
-        'resiliencia_resultados_individuales',//menu slug
+        'resultados-individuales',//menu slug
         'render_resiliencia_resultados_individuales' //callback function
     );
 }
