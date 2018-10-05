@@ -92,7 +92,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
         global $wpdb;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
 		if(!empty($search)){
-			$sql .= " AND (nombre LIKE '%{$search}%')";
+			$sql .= "WHERE nombre LIKE '%{$search}%'";
 		}
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		foreach($data as $index => $row) {
@@ -186,7 +186,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Mixed
      */
 	public function no_items() {
-		echo 'Nadie ha contestado aún.';
+		echo 'No hay resultados.';
 	}
 
 	/**
