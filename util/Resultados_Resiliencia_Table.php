@@ -91,7 +91,6 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
     private function table_data($search='', $admin) {
 		global $wpdb;
 		$hash = get_user_hash();
-		print $admin;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros";
 		if(!empty($search) && $admin == false){
 			$sql .= " WHERE nombre LIKE '%{$search}%' AND organizacion='{$hash}'";
