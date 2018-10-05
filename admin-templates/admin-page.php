@@ -13,7 +13,7 @@ if(!class_exists('Resultados_Resiliencia_Table')){
     require_once( RES_PLUGIN_PATH . 'util/Resultados_Resiliencia_Table.php' );
 }
 // Creando Página en dashboard
-add_filter( 'set-screen-option', 'set_screen', 10, 3 );
+// add_filter( 'set-screen-option', 'set_screen', 10, 3 );
 add_action( 'admin_menu', 'resiliencia_qi_admin' );
 
 function resiliencia_qi_admin() {
@@ -78,18 +78,18 @@ function render_table_resultados() {
     print '</div>';
 }
 
-function set_screen( $status, $option, $value ) {
-	return $value;
-}
+// function set_screen( $status, $option, $value ) {
+// 	return $value;
+// }
 
-function screen_option() {
+// function screen_option() {
 
-	$option = 'per_page';
-	$args   = [
-		'label'   => 'Resultados',
-		'default' => 10,
-		'option'  => 'resultados_per_page'
-	];
+// 	$option = 'per_page';
+// 	$args   = [
+// 		'label'   => 'Resultados',
+// 		'default' => 10,
+// 		'option'  => 'resultados_per_page'
+// 	];
 
-	add_screen_option( $option, $args );
-}
+// 	add_screen_option( $option, $args );
+// }
