@@ -221,7 +221,8 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		}
 
 		if ( 'view' === $this->current_action() ) {
-			exit(wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ))));
+			// exit(wp_redirect(esc_url(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ))));
+			exit(wp_redirect(admin_url('admin.php?page=resultados-individuales') ));
 		}
 	  
 		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
