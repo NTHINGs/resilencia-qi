@@ -56,6 +56,7 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
                 'role'               =>   'empresa',
             );
             $user_id = wp_insert_user( $userdata );
+            echo $user_id;
             if ( ! is_wp_error( $user_id ) ) {
                 $user_id = add_user_meta( $user_id, 'hash', $hash, true );
                 if ( $user_id !== False ) {
