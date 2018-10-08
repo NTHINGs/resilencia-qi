@@ -98,11 +98,11 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 			);
 			$query = new WP_User_Query( $args );
 			$data = array();
+			$index = 0;
 			foreach ( $query->get_results() as $user ) {
-				print '<p>' . $user->display_name . '</p>';
 				$hash = get_user_meta($user->ID, 'hash', true);
-
 				$data[$index]['nombre'] = $user->display_name;
+				$data[$index]['id'] = $user->ID;
 				$resultados = get_resultados_por_org($hash);
 				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
@@ -110,6 +110,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 				$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
 				$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
 				$data[$index]['total'] = calcular_total($resultados);
+				$index++;
 			}
 			return $data;
 		} else {
