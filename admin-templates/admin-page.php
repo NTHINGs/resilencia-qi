@@ -80,7 +80,12 @@ function render_resiliencia_admin_org() {
             "%HASH%",
         );
         $values = array(
-            $title,
+            get_users(
+                array(
+                    'role' => 'empresa',
+                    'hash' => $org_id,
+                )
+            )[0]->display_name,
             get_site_url(),
             $org_id,
         );
