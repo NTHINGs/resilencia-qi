@@ -39,7 +39,7 @@ function resiliencia_qi_admin() {
         'render_resiliencia_resultados_individuales' //callback function
     );
 
-    add_submenu_page(
+    $hook2 = add_submenu_page(
         null,
         'Resultados De Tu Organización', //page title
         'Resultados De Tu Organización', //menu title
@@ -47,6 +47,7 @@ function resiliencia_qi_admin() {
         'resultados-organizacionales',//menu slug
         'render_resiliencia_admin_org' //callback function
     );
+    add_action( "load-$hook2", 'screen_option' );
 }
 function render_resiliencia_qi_admin() {
     global $title;
