@@ -93,7 +93,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 
 		if(!empty($search)){
 			$args = array(
-				'search'         => $search,
+				'search'         => '*'.esc_attr( $search ).'*',
 				'search_columns' => array( 'display_name' )
 			);
 			$query = new WP_User_Query( $args );
