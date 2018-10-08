@@ -59,6 +59,52 @@ function get_resultados($cuestionario_id) {
     return $resultados;
 }
 
+function get_resultados_por_org($org_id) {
+    global $wpdb;
+    $resultados = array();
+    
+    $obj = array(
+        'Autoestima' => array(
+            'P' => 'S',
+            'N' => 'N',
+        ),
+        'Empatía' => array(
+            'P' => 'S',
+            'N' => 'N',
+        ),
+        'Autonomía' => array(
+            'P' => 'S',
+            'N' => 'N',
+        ),
+        'Humor' => array(
+            'P' => 'S',
+            'N' => 'N',
+        ),
+        'Creatividad' => array(
+            'P' => 'S',
+            'N' => 'N',
+        ),
+    );
+
+    foreach($obj as $grupo => $array_tipo_res) {
+        $resultado = 0;
+        foreach($array_tipo_res as $tipo => $respuesta) {
+            $sql = "SELECT COUNT(RS.respuesta)
+                    FROM {$wpdb->prefix}resiliencia_resultados RS, {$wpdb->prefix}resiliencia_preguntas P, {$wpdb->prefix}resiliencia_registros R
+                    WHERE RS.pregunta = P.id 
+                    AND RS.cuestionario = R.id 
+                    AND R.organizacion = '{$org_id}'
+                    AND P.tipo = '{$tipo}'
+                    AND P.grupo = '{$grupo}'
+                    AND RS.respuesta = '{$respuesta}'";
+            $resultado += (int)$wpdb->get_var($sql);
+        }
+        array_push($resultados, $resultado);
+    }
+
+    return $resultados;
+}
+
 function calcular_rango($grupo, $puntaje) {
     $puntajes = array(
         'autoestima' => array(

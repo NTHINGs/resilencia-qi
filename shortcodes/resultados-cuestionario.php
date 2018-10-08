@@ -32,14 +32,18 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
     function render_html_resultados_cuestionario($atts) {
         $_atts = shortcode_atts( array(
             'cuestionario_id'  => NULL,
+            'org_id' => NULL,
         ), $atts );
         $cuestionario_id = $_atts['cuestionario_id'];
+        $org_id = $_atts['org_id'];
         if($cuestionario_id == NULL) {
             // Resultados generales de la organizacion
             echo resultados_organizacion_resiliencia();
         } elseif ($cuestionario_id != NULL) {
             // Resultados individuales
             echo resultados_por_cuestionario_resiliencia($cuestionario_id);
+        } elseif ($org_id != NULL) {
+            echo resultados_por_organizacion_resiliencia($org_id);
         } else {
             echo 'ERROR: El shortcode tiene parametros incorrectos.';
         }
@@ -57,6 +61,28 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         );
         $data = array();
         $resultados = get_resultados($cuestionario_id);
+        array_push($data, calcular_rango('autoestima', (int)$resultados[0]));
+        array_push($data, calcular_rango('empatia', (int)$resultados[1]));
+        array_push($data, calcular_rango('autonomia', (int)$resultados[2]));
+        array_push($data, calcular_rango('humor', (int)$resultados[3]));
+        array_push($data, calcular_rango('creatividad', (int)$resultados[4]));
+        array_push($data, calcular_total($resultados));
+        $values = array(
+            json_encode($resultados),
+            json_encode($data),
+        );
+        
+        return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
+    }
+
+
+    function resultados_por_organizacion_resiliencia($org_id) {
+        $variables = array(
+            '%DATA%',
+            '%RESULTADOS%'
+        );
+        $data = array();
+        $resultados = get_resultados_por_org($org_id);
         array_push($data, calcular_rango('autoestima', (int)$resultados[0]));
         array_push($data, calcular_rango('empatia', (int)$resultados[1]));
         array_push($data, calcular_rango('autonomia', (int)$resultados[2]));
