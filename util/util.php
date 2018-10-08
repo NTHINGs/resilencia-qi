@@ -52,7 +52,6 @@ function get_resultados($cuestionario_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
-            print $wpdb->get_var($sql);
             $resultado += (int)$wpdb->get_var($sql);
         }
         array_push($resultados, $resultado);
@@ -76,6 +75,7 @@ function get_resultados_por_org($org_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
+            print $wpdb->get_var($sql);
             $resultado += (int)$wpdb->get_var($sql);
         }
         array_push($resultados, $resultado);
