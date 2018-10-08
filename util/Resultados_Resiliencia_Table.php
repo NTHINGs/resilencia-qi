@@ -222,7 +222,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		//Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 			self::delete_registro( absint( $_GET['registro'] ) );
-			wp_redirect( add_query_arg() );
+			wp_redirect(add_query_arg( 'org_id', $_GET['org_id'], admin_url('admin.php?page=resultados-organizacionales') ));
 			exit;
 		}
 
@@ -243,7 +243,7 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 				self::delete_registro( $id );
 			}
 	  
-			wp_redirect( add_query_arg() );
+			wp_redirect(add_query_arg( 'org_id', $_GET['org_id'], admin_url('admin.php?page=resultados-organizacionales') ));
 			exit;
 		}
 	}
