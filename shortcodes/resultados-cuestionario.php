@@ -36,10 +36,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         ), $atts );
         $cuestionario_id = $_atts['cuestionario_id'];
         $org_id = $_atts['org_id'];
-        if($cuestionario_id == NULL) {
-            // Resultados generales de la organizacion
-            echo resultados_organizacion_resiliencia();
-        } elseif ($cuestionario_id != NULL) {
+        if ($cuestionario_id != NULL) {
             // Resultados individuales
             echo resultados_por_cuestionario_resiliencia($cuestionario_id);
         } elseif ($org_id != NULL) {
@@ -47,11 +44,6 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         } else {
             echo 'ERROR: El shortcode tiene parametros incorrectos.';
         }
-    }
-
-    function resultados_organizacion_resiliencia() {
-        $current_user = wp_get_current_user();
-        $org_id = get_user_meta($current_user->ID, 'hash', true);
     }
     
     function resultados_por_cuestionario_resiliencia($cuestionario_id) {
