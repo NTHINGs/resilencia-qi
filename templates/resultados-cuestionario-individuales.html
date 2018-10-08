@@ -31,9 +31,8 @@
 </div>
 
 <script>
-    var height = '%HEIGHT%' + 0;
     var ctx = document.getElementById("resultados").getContext("2d");
-    ctx.canvas.height = height;
+    ctx.canvas.height = 400;
     ctx.canvas.width = document.getElementById('result-container').innerWidth;
     var resultados = new Chart(ctx, {
         type: 'bar',
