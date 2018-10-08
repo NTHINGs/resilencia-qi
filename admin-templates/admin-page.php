@@ -70,6 +70,7 @@ function render_resiliencia_qi_admin() {
 }
 
 function render_resiliencia_admin_org() {
+    global $title;
     if( isset($_GET['org_id']) ){
         $org_id = $_GET['org_id'];
         $variables = array(
