@@ -92,11 +92,18 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 		global $wpdb;
 
 		$sql = "SELECT DISTINCT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
-		if(!empty($search)){
-			$sql .= " WHERE organizacion LIKE '%{$search}%'";
-		}
 
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
+		if(!empty($search)){
+			$args = array(
+				'search'         => $search,
+				'search_columns' => array( 'display_name' )
+			);
+			$data = new WP_User_Query( $args );
+		}
+
+		print print_r($data);
+
 		foreach($data as $index => $row) {
 			$data[$index]['nombre'] = get_users(
                 array(
