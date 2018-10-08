@@ -98,7 +98,7 @@ function render_table_orgs() {
     print '<div id="poststuff">';
 
     print '<form method="post">';
-    $wp_list_table = new Resultados_Resiliencia_Table();
+    $wp_list_table = new Orgs_Resiliencia_Table();
     if( isset($_POST['s']) ){
         $wp_list_table->prepare_items($_POST['s']);
     } else {
