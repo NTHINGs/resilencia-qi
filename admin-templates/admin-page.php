@@ -41,45 +41,68 @@ function render_resiliencia_qi_admin() {
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
-        $variables = array(
-            "%TITLE%",
-            "%SITE_URL%",
-            "%HASH%",
-        );
-        $values = array(
-            $title,
-            get_site_url(),
-            get_user_hash(),
-        );
-        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        print do_shortcode('[resultados-cuestionario org_id="' . get_user_hash() . '"]');
-        print '</div>';
-        print '<h2>Resultados</h2>';
-        render_table_resultados(false);
-        
+        render_resiliencia_admin_org(get_user_hash());        
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
-        $variables = array(
-            "%TITLE%",
-        );
-        $values = array(
-            $title,
-        );
-        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
-        render_table_resultados(true);
+        if( isset($_GET['org_id']) ){
+            render_resiliencia_org($_GET['org_id']);
+        } else {
+            $variables = array(
+                "%TITLE%",
+            );
+            $values = array(
+                $title,
+            );
+            print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
+            render_table_orgs();
+        }
 	}
 	
 }
 
-function render_table_resultados($admin) {
+function render_resiliencia_admin_org($org_id) {
+    $variables = array(
+        "%TITLE%",
+        "%SITE_URL%",
+        "%HASH%",
+    );
+    $values = array(
+        $title,
+        get_site_url(),
+        $org_id,
+    );
+    print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+    print do_shortcode('[resultados-cuestionario org_id="' . $org_id . '"]');
+    print '</div>';
+    print '<h2>Resultados</h2>';
+    render_table_resultados($org_id);
+}
+
+function render_table_resultados($org_id) {
     print '<div id="poststuff">';
 
     print '<form method="post">';
     $wp_list_table = new Resultados_Resiliencia_Table();
     if( isset($_POST['s']) ){
-        $wp_list_table->prepare_items($_POST['s'], $admin);
+        $wp_list_table->prepare_items($_POST['s'], $org_id);
     } else {
-        $wp_list_table->prepare_items(null, $admin);
+        $wp_list_table->prepare_items(null, $org_id);
+    }
+    $wp_list_table->search_box( 'Buscar', 'search_id' ); 
+    $wp_list_table->display();
+    print '</form>';
+    print '</div>';
+}
+
+function render_table_orgs() {
+    print '<div id="poststuff">';
+
+    print '<form method="post">';
+    $wp_list_table = new Resultados_Resiliencia_Table();
+    if( isset($_POST['s']) ){
+        $wp_list_table->prepare_items($_POST['s']);
+    } else {
+        $wp_list_table->prepare_items();
     }
     $wp_list_table->search_box( 'Buscar', 'search_id' ); 
     $wp_list_table->display();
