@@ -87,7 +87,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $values = array(
             json_encode($resultados),
             json_encode($data),
-            400,
+            40,
         );
         
         return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
