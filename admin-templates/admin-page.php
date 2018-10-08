@@ -51,9 +51,9 @@ function render_resiliencia_qi_admin() {
             get_site_url(),
             get_user_hash(),
         );
-        // print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        print do_shortcode('[resultados-cuestionario org_id="' . get_user_hash() . '"]');
-        // print '</div></div>';
+        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        do_shortcode('[resultados-cuestionario org_id="' . get_user_hash() . '"]');
+        print '</div></div>';
         render_table_resultados(false);
         
 	} elseif (current_user_can('resiliencia_admin')) {
