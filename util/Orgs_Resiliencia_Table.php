@@ -49,9 +49,8 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
      */
     public function get_columns() {
         $columns = array(
-			'cb'     	   => '<input type="checkbox" />',
-            'id'           => 'ID',
 			'nombre'       => 'Nombre',
+			'id'           => 'ID',
 			'autoestima'   => 'Autoestima',
 			'empatia'      => 'Empatía',
 			'autonomia'    => 'Autonomía',
@@ -79,8 +78,8 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
      */
     public function get_sortable_columns() {
         return array(
-			'id' => array( 'id', true ),
-			'nombre' => array('nombre', false)
+			'nombre' => array('nombre', true),
+			'id' => array( 'id', false ),
 		);
 	}
 	
@@ -92,29 +91,28 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
     private function table_data($search='') {
 		global $wpdb;
 
-		$empresas = get_users(
-				array(
-					'role' => 'empresa',
-				)
-			);
-		print print_r($empresas);
+		$sql = "SELECT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
+		if(!empty($search)){
+			$sql .= " WHERE organizacion LIKE '%{$search}%'";
+		}
 
-		// $sql = "SELECT organizacion FROM {$wpdb->prefix}resiliencia_registros";
-		// if(!empty($search)){
-		// 	$sql .= " WHERE organizacion LIKE '%{$search}%'";
-		// }
-
-		// $data = $wpdb->get_results( $sql, 'ARRAY_A' );
-		// foreach($data as $index => $row) {
-		// 	$resultados = get_resultados($row['id']);
-		// 	$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
-		// 	$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
-		// 	$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-		// 	$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
-		// 	$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
-		// 	$data[$index]['total'] = calcular_total($resultados);
-		// }
-        return $empresas;
+		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
+		foreach($data as $index => $row) {
+			$data[$index]['nombre'] = get_users(
+                array(
+                    'role' => 'empresa',
+                    'hash' => $row['id'],
+                )
+            )[0]->display_name;
+			$resultados = get_resultados_por_org($row['id']);
+			$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+			$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+			$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
+			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+			$data[$index]['total'] = calcular_total($resultados);
+		}
+        return $data;
 	}
 	
 	/**
@@ -122,12 +120,11 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
      *
      * @return Mixed
      */
-	function column_id( $item ) {
-		$title = '<strong>' . $item['id'] . '</strong>';
+	function column_nombre( $item ) {
+		$title = '<strong>' . $item['nombre'] . '</strong>';
 	  
 		$actions = [
 			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
-			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'] )
 		];
 	  
 		return $title . $this->row_actions( $actions );
@@ -173,22 +170,11 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
         if(!empty($_GET['order'])) {
             $order = $_GET['order'];
         }
-        $result = $a[$orderby] - $b[$orderby];
+        $result = strnatcmp($a[$orderby], $b[$orderby]);
         if($order === 'asc') {
             return $result;
         }
         return -$result;
-	}
-
-	/**
-     * Columna para seleccionar multiples filas
-     *
-     * @return String
-     */
-	function column_cb( $item ) {
-		return sprintf(
-		  '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['id']
-		);
 	}
 
 	/**
@@ -199,54 +185,11 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 	public function no_items() {
 		echo 'No hay resultados.';
 	}
-
-	/**
-     * Definir acciones en lote
-     *
-     * @return Mixed
-     */
-	public function get_bulk_actions() {
-		$actions = [
-			'bulk-delete' => 'Eliminar'
-		];
-		
-		return $actions;
-	}
-
-	public static function delete_registro( $id ) {
-		global $wpdb;
-		
-		$wpdb->delete(
-			"{$wpdb->prefix}resiliencia_registros",
-			[ 'id' => $id ],
-			[ '%d' ]
-		);
-	}
 	
 	public function process_bulk_action() {
 		//Detect when a bulk action is being triggered...
-		if ( 'delete' === $this->current_action() ) {
-			self::delete_registro( absint( $_GET['registro'] ) );
-			wp_redirect( esc_url( add_query_arg() ) );
-			exit;
-		}
-
 		if ( 'view' === $this->current_action() ) {
 			wp_redirect(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ));
-			exit;
-		}
-	  
-		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
-			 || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
-		) {
-	  
-			$delete_ids = esc_sql( $_POST['bulk-delete'] );
-		
-			foreach ( $delete_ids as $id ) {
-				self::delete_registro( $id );
-			}
-	  
-			wp_redirect( esc_url( add_query_arg() ) );
 			exit;
 		}
 	}
