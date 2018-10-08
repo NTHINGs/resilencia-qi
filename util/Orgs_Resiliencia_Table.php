@@ -88,7 +88,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
     private function table_data($search='') {
 		global $wpdb;
 
-		$sql = "SELECT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
+		$sql = "SELECT DISTINCT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
 		if(!empty($search)){
 			$sql .= " WHERE organizacion LIKE '%{$search}%'";
 		}

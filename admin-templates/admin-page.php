@@ -48,7 +48,7 @@ function render_resiliencia_qi_admin() {
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
         if( isset($_GET['org_id']) ){
-            render_resiliencia_org($_GET['org_id']);
+            render_resiliencia_admin_org($_GET['org_id']);
         } else {
             $variables = array(
                 "%TITLE%",
