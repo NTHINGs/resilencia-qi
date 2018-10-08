@@ -34,14 +34,12 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
             'cuestionario_id'  => NULL,
             'org_id' => NULL,
         ), $atts );
-        echo 'IM HERE';
         $cuestionario_id = $_atts['cuestionario_id'];
         $org_id = $_atts['org_id'];
         if ($cuestionario_id != NULL) {
             // Resultados individuales
             echo resultados_por_cuestionario_resiliencia($cuestionario_id);
         } elseif ($org_id != NULL) {
-            
             echo resultados_por_organizacion_resiliencia($org_id);
         } else {
             echo 'ERROR: El shortcode tiene parametros incorrectos.';

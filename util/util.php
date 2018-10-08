@@ -7,6 +7,30 @@
  * @since    1.0.0
  */
 
+$obj = array(
+    'Autoestima' => array(
+        'P' => 'S',
+        'N' => 'N',
+    ),
+    'Empatía' => array(
+        'P' => 'S',
+        'N' => 'N',
+    ),
+    'Autonomía' => array(
+        'P' => 'S',
+        'N' => 'N',
+    ),
+    'Humor' => array(
+        'P' => 'S',
+        'N' => 'N',
+    ),
+    'Creatividad' => array(
+        'P' => 'S',
+        'N' => 'N',
+    ),
+);
+
+
 function get_user_hash() {
     $current_user = wp_get_current_user();
     $hash = get_user_meta($current_user->ID, 'hash', true);
@@ -14,31 +38,8 @@ function get_user_hash() {
 }
 
 function get_resultados($cuestionario_id) {
-    global $wpdb;
+    global $wpdb, $obj;
     $resultados = array();
-    
-    $obj = array(
-        'Autoestima' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Empatía' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Autonomía' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Humor' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Creatividad' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-    );
 
     foreach($obj as $grupo => $array_tipo_res) {
         $resultado = 0;
@@ -51,6 +52,7 @@ function get_resultados($cuestionario_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
+            print $wpdb->get_var($sql);
             $resultado += (int)$wpdb->get_var($sql);
         }
         array_push($resultados, $resultado);
@@ -60,31 +62,8 @@ function get_resultados($cuestionario_id) {
 }
 
 function get_resultados_por_org($org_id) {
-    global $wpdb;
+    global $wpdb, $obj;
     $resultados = array();
-    
-    $obj = array(
-        'Autoestima' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Empatía' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Autonomía' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Humor' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-        'Creatividad' => array(
-            'P' => 'S',
-            'N' => 'N',
-        ),
-    );
 
     foreach($obj as $grupo => $array_tipo_res) {
         $resultado = 0;
