@@ -106,6 +106,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 		print print_r($data);
 
 		foreach($data as $index => $row) {
+			print print_r($row);
 			$data[$index]['nombre'] = get_users(
                 array(
                     'role' => 'empresa',
