@@ -102,7 +102,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 			foreach ( $query->get_results() as $user ) {
 				$hash = get_user_meta($user->ID, 'hash', true);
 				$data[$index]['nombre'] = $user->display_name;
-				$data[$index]['id'] = $user->ID;
+				$data[$index]['id'] = $hash;
 				$resultados = get_resultados_por_org($hash);
 				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
