@@ -77,7 +77,7 @@ function get_resultados_por_org($org_id) {
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
             $resultado += (int)$wpdb->get_var($sql);
-            $contador++;
+            $contador += 1;
         }
         $promedio = $resultado / $contador;
         array_push($resultados, $promedio);

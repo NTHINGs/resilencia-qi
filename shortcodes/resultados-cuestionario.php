@@ -50,7 +50,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $variables = array(
             '%DATA%',
             '%RESULTADOS%',
-            600,
+            '%HEIGHT%',
         );
         $data = array();
         $resultados = get_resultados($cuestionario_id);
@@ -63,6 +63,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $values = array(
             json_encode($resultados),
             json_encode($data),
+            600,
         );
         
         return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
@@ -73,7 +74,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $variables = array(
             '%DATA%',
             '%RESULTADOS%',
-            '%HEIGHT%'.
+            '%HEIGHT%',
         );
         $data = array();
         $resultados = get_resultados_por_org($org_id);
