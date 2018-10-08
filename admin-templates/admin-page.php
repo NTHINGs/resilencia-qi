@@ -12,6 +12,9 @@ if ( file_exists( RES_PLUGIN_PATH . 'util/util.php' ) ) {
 if(!class_exists('Resultados_Resiliencia_Table')){
     require_once( RES_PLUGIN_PATH . 'util/Resultados_Resiliencia_Table.php' );
 }
+if(!class_exists('Orgs_Resiliencia_Table')){
+    require_once( RES_PLUGIN_PATH . 'util/Orgs_Resiliencia_Table.php' );
+}
 // Creando Página en dashboard
 add_filter( 'set-screen-option', 'set_screen', 10, 3 );
 add_action( 'admin_menu', 'resiliencia_qi_admin' );
