@@ -28,7 +28,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 		$this->_column_headers = array($columns, $hidden, $sortable);
 
 		/** Acciones en lote */
-		$this->process_bulk_action();
+		// $this->process_bulk_action();
 
 		// Paginacion
         $perPage = $this->get_items_per_page( 'resultados_per_page', 10 );
@@ -124,7 +124,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 		$title = '<strong>' . $item['nombre'] . '</strong>';
 	  
 		$actions = [
-			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
+			'view'    => sprintf( '<a href="?page=%s&action=%s&org_id=%s&noheader=true">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
 		];
 	  
 		return $title . $this->row_actions( $actions );
@@ -189,7 +189,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 	public function process_bulk_action() {
 		//Detect when a bulk action is being triggered...
 		if ( 'view' === $this->current_action() ) {
-			wp_redirect(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ));
+			wp_redirect(add_query_arg( 'org_id', $_GET['org_id'], admin_url('admin.php?page=cuestionario-resiliencia') ));
 			exit;
 		}
 	}
