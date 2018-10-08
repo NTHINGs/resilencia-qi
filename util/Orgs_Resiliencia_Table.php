@@ -99,9 +99,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 			$query = new WP_User_Query( $args );
 			$data = array();
 			$index = 0;
-			print $search;
 			foreach ( $query->get_results() as $user ) {
-				print print_r($user);
 				$hash = get_user_meta($user->ID, 'hash', true);
 				$data[$index]['nombre'] = $user->display_name;
 				$data[$index]['id'] = $hash;
