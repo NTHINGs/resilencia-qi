@@ -91,37 +91,51 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
     private function table_data($search='') {
 		global $wpdb;
 
-		$sql = "SELECT DISTINCT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
-
-		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		if(!empty($search)){
 			$args = array(
 				'search'         => $search,
 				'search_columns' => array( 'display_name' )
 			);
 			$query = new WP_User_Query( $args );
-			$data = $query->get_results();
-		}
+			$data = array();
+			foreach ( $query->get_results() as $user ) {
+				print '<p>' . $user->display_name . '</p>';
+				$hash = get_user_meta($user->ID, 'hash', true);
 
-		print print_r($data);
+				$data[$index]['nombre'] = $user->display_name;
+				$resultados = get_resultados_por_org($hash);
+				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+				$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+				$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
+				$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+				$data[$index]['total'] = calcular_total($resultados);
+			}
+			return $data;
+		} else {
+			
+			$sql = "SELECT DISTINCT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
 
-		foreach($data as $index => $row) {
-			print print_r($row);
-			$data[$index]['nombre'] = get_users(
-                array(
-                    'role' => 'empresa',
-                    'hash' => $row['id'],
-                )
-            )[0]->display_name;
-			$resultados = get_resultados_por_org($row['id']);
-			$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
-			$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
-			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-			$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
-			$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
-			$data[$index]['total'] = calcular_total($resultados);
+			$data = $wpdb->get_results( $sql, 'ARRAY_A' );
+
+			foreach($data as $index => $row) {
+				$data[$index]['nombre'] = get_users(
+					array(
+						'role' => 'empresa',
+						'hash' => $row['id'],
+					)
+				)[0]->display_name;
+				$resultados = get_resultados_por_org($row['id']);
+				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+				$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+				$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
+				$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+				$data[$index]['total'] = calcular_total($resultados);
+			}
+			return $data;
 		}
-        return $data;
+		
 	}
 	
 	/**
