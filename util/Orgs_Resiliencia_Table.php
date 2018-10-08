@@ -28,7 +28,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 		$this->_column_headers = array($columns, $hidden, $sortable);
 
 		/** Acciones en lote */
-		// $this->process_bulk_action();
+		$this->process_bulk_action();
 
 		// Paginacion
         $perPage = $this->get_items_per_page( 'resultados_per_page', 10 );
