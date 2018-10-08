@@ -54,8 +54,7 @@ function render_resiliencia_qi_admin() {
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
-        wp_redirect(add_query_arg( 'org_id', get_user_hash(), admin_url('admin.php?page=resultados-organizacionales') ));
-		exit;     
+        render_resiliencia_admin_org(get_user_hash());
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
         $variables = array(
@@ -70,10 +69,11 @@ function render_resiliencia_qi_admin() {
 	
 }
 
-function render_resiliencia_admin_org() {
-    global $title;
+function render_resiliencia_admin_org($org_id=NULL) {
     if( isset($_GET['org_id']) ){
         $org_id = $_GET['org_id'];
+    }
+    if($org_id != NULL) {
         $variables = array(
             "%TITLE%",
             "%SITE_URL%",
@@ -94,7 +94,10 @@ function render_resiliencia_admin_org() {
         print '</div>';
         print '<h2>Resultados</h2>';
         render_table_resultados($org_id);
+    } else {
+        print 'ERROR ORG_ID NO ESTA DEFINIDO';
     }
+    
 }
 
 function render_table_resultados($org_id) {
