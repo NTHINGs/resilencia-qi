@@ -66,6 +66,7 @@ function get_resultados_por_org($org_id) {
 
     foreach($obj as $grupo => $array_tipo_res) {
         $resultado = 0;
+        $contador = 0;
         foreach($array_tipo_res as $tipo => $respuesta) {
             $sql = "SELECT COUNT(RS.respuesta)
                     FROM {$wpdb->prefix}resiliencia_resultados RS, {$wpdb->prefix}resiliencia_preguntas P, {$wpdb->prefix}resiliencia_registros R
@@ -75,10 +76,11 @@ function get_resultados_por_org($org_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
-            print $wpdb->get_var($sql);
             $resultado += (int)$wpdb->get_var($sql);
+            $contador++;
         }
-        array_push($resultados, $resultado);
+        $promedio = $resultado / $contador;
+        array_push($resultados, $promedio);
     }
 
     return $resultados;

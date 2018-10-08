@@ -49,7 +49,8 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
     function resultados_por_cuestionario_resiliencia($cuestionario_id) {
         $variables = array(
             '%DATA%',
-            '%RESULTADOS%'
+            '%RESULTADOS%',
+            600,
         );
         $data = array();
         $resultados = get_resultados($cuestionario_id);
@@ -71,7 +72,8 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
     function resultados_por_organizacion_resiliencia($org_id) {
         $variables = array(
             '%DATA%',
-            '%RESULTADOS%'
+            '%RESULTADOS%',
+            '%HEIGHT%'.
         );
         $data = array();
         $resultados = get_resultados_por_org($org_id);
@@ -84,6 +86,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         $values = array(
             json_encode($resultados),
             json_encode($data),
+            400,
         );
         
         return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/resultados-cuestionario-individuales.html" ));
