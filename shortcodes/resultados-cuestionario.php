@@ -77,6 +77,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
 
 
     function resultados_por_organizacion_resiliencia($org_id) {
+        return $org_id;
         $variables = array(
             '%DATA%',
             '%RESULTADOS%'
@@ -89,7 +90,6 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         array_push($data, calcular_rango('humor', (int)$resultados[3]));
         array_push($data, calcular_rango('creatividad', (int)$resultados[4]));
         array_push($data, calcular_total($resultados));
-        print json_encode($data);
         $values = array(
             json_encode($resultados),
             json_encode($data),
