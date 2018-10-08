@@ -38,47 +38,56 @@ function resiliencia_qi_admin() {
         'resultados-individuales',//menu slug
         'render_resiliencia_resultados_individuales' //callback function
     );
+
+    add_submenu_page(
+        null,
+        'Resultados De Tu Organización', //page title
+        'Resultados De Tu Organización', //menu title
+        'resiliencia', //capability,
+        'resultados-organizacionales',//menu slug
+        'render_resiliencia_admin_org' //callback function
+    );
 }
 function render_resiliencia_qi_admin() {
     global $title;
 	
 	if (current_user_can('resiliencia') && !current_user_can('resiliencia_admin')) {
         // Render pagina de organizacion
-        render_resiliencia_admin_org(get_user_hash());        
+        wp_redirect(add_query_arg( 'org_id', get_user_hash(), admin_url('admin.php?page=resultados-organizacionales') ));
+		exit;     
 	} elseif (current_user_can('resiliencia_admin')) {
         // Render pagina de todas las organizaciones
-        if( isset($_GET['org_id']) ){
-            render_resiliencia_admin_org($_GET['org_id']);
-        } else {
-            $variables = array(
-                "%TITLE%",
-            );
-            $values = array(
-                $title,
-            );
-            print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
-            render_table_orgs();
-        }
+        $variables = array(
+            "%TITLE%",
+        );
+        $values = array(
+            $title,
+        );
+        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-generales.html" ));
+        render_table_orgs();
 	}
 	
 }
 
-function render_resiliencia_admin_org($org_id) {
-    $variables = array(
-        "%TITLE%",
-        "%SITE_URL%",
-        "%HASH%",
-    );
-    $values = array(
-        $title,
-        get_site_url(),
-        $org_id,
-    );
-    print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-    print do_shortcode('[resultados-cuestionario org_id="' . $org_id . '"]');
-    print '</div>';
-    print '<h2>Resultados</h2>';
-    render_table_resultados($org_id);
+function render_resiliencia_admin_org() {
+    if( isset($_GET['org_id']) ){
+        $org_id = $_GET['org_id'];
+        $variables = array(
+            "%TITLE%",
+            "%SITE_URL%",
+            "%HASH%",
+        );
+        $values = array(
+            $title,
+            get_site_url(),
+            $org_id,
+        );
+        print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
+        print do_shortcode('[resultados-cuestionario org_id="' . $org_id . '"]');
+        print '</div>';
+        print '<h2>Resultados</h2>';
+        render_table_resultados($org_id);
+    }
 }
 
 function render_table_resultados($org_id) {
