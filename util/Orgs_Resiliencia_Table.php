@@ -101,16 +101,18 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 			$index = 0;
 			foreach ( $query->get_results() as $user ) {
 				$hash = get_user_meta($user->ID, 'hash', true);
-				$data[$index]['nombre'] = $user->display_name;
-				$data[$index]['id'] = $hash;
-				$resultados = get_resultados_por_org($hash);
-				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
-				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
-				$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-				$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
-				$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
-				$data[$index]['total'] = calcular_total($resultados);
-				$index++;
+				if($hash) {
+					$data[$index]['nombre'] = $user->display_name;
+					$data[$index]['id'] = $hash;
+					$resultados = get_resultados_por_org($hash);
+					$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+					$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+					$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+					$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
+					$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+					$data[$index]['total'] = calcular_total($resultados);
+					$index++;
+				}
 			}
 			return $data;
 		} else {
