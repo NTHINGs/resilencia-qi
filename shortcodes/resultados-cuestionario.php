@@ -69,7 +69,6 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
 
 
     function resultados_por_organizacion_resiliencia($org_id) {
-        return $org_id;
         $variables = array(
             '%DATA%',
             '%RESULTADOS%'
