@@ -51,7 +51,7 @@ function render_resiliencia_qi_admin() {
             $title,
             get_site_url(),
             get_user_hash(),
-            do_shortcode('[resultados-cuestionario org_id="' . get_user_hash() . '"]');
+            do_shortcode('[resultados-cuestionario org_id="' . get_user_hash() . '"]'),
         );
         
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
