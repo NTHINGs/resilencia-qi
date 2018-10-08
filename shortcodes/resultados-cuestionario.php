@@ -89,6 +89,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
         array_push($data, calcular_rango('humor', (int)$resultados[3]));
         array_push($data, calcular_rango('creatividad', (int)$resultados[4]));
         array_push($data, calcular_total($resultados));
+        print json_encode($data);
         $values = array(
             json_encode($resultados),
             json_encode($data),
