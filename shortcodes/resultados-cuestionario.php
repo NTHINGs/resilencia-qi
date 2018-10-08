@@ -40,6 +40,7 @@ if ( ! function_exists( 'resultados_cuestionario_shortcode' ) ) {
             // Resultados individuales
             echo resultados_por_cuestionario_resiliencia($cuestionario_id);
         } elseif ($org_id != NULL) {
+            echo 'IM HERE';
             echo resultados_por_organizacion_resiliencia($org_id);
         } else {
             echo 'ERROR: El shortcode tiene parametros incorrectos.';
