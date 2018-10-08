@@ -9,7 +9,7 @@
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
-
+$org_id = NULL;
 class Resultados_Resiliencia_Table extends WP_List_Table {
 	 /**
      * Metodo para preparar la informacion de la tabla
@@ -17,13 +17,15 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Void
      */
     public function prepare_items($search ='', $hash) {
+		global $org_id;
+		$org_id = $hash;
 		// Construir columnas
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 		
 		// Traer informacion y ordenarla
-        $data = $this->table_data($search, $hash);
+        $data = $this->table_data($search);
 		usort( $data, array( &$this, 'sort_data' ) );
 		$this->_column_headers = array($columns, $hidden, $sortable);
 
@@ -89,9 +91,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    private function table_data($search='', $hash) {
-		global $wpdb;
-		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$hash}'";
+    private function table_data($search='') {
+		global $wpdb, $org_id;
+		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$org_id}'";
 		if(!empty($search)){
 			$sql .= " AND nombre LIKE '%{$search}%'";
 		}
@@ -115,11 +117,12 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Mixed
      */
 	function column_id( $item ) {
+		global $org_id;
 		$title = '<strong>' . $item['id'] . '</strong>';
 	  
 		$actions = [
-			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Ver</a>', $_REQUEST['page'], 'view', $item['id'] ),
-			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'] )
+			'view'    => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true&org_id=%s">Ver</a>', $_REQUEST['page'], 'view', $item['id'], $org_id ),
+			'delete'  => sprintf( '<a href="?page=%s&action=%s&registro=%s&noheader=true&org_id=%s">Eliminar</a>', $_REQUEST['page'], 'delete', $item['id'], $org_id )
 		];
 	  
 		return $title . $this->row_actions( $actions );
@@ -224,7 +227,9 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
 		}
 
 		if ( 'view' === $this->current_action() ) {
-			wp_redirect(add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') ));
+			$url = add_query_arg( 'registro', $_GET['registro'], admin_url('admin.php?page=resultados-individuales') );
+			$url = add_query_arg( 'org_id', $_GET['org_id'], $url );
+			wp_redirect($url);
 			exit;
 		}
 	  
