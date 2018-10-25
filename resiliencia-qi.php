@@ -79,7 +79,15 @@ function resiliencia_qi_create_plugin_database() {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta($sql);
 
-	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resiliencia'=> true, 'cesqt'=> true ) );
-	add_role( 'reporter-empresa', 'Reportador de Empresas', array( 'read' => true, 'resiliencia'=> true, 'resiliencia_admin'=> true, 'cesqt_admin'=> true ) );
+	add_role( 'empresa', 'Empresa', array( 'read' => true, 'resiliencia'=> true, 'cesqt'=> true, 'areasorg'=> true ) );
+	add_role( 'reporter-empresa', 'Reportador de Empresas', array( 
+			'read' => true, 
+			'resiliencia'=> true, 
+			'resiliencia_admin'=> true, 
+			'cesqt_admin'=> true, 
+			'areasorg'=> true, 
+			'areasorg_admin' => true
+		) 
+	);
 }
 register_activation_hook( __FILE__, 'resiliencia_qi_create_plugin_database' );

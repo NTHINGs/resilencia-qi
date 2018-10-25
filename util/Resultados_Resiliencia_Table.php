@@ -10,15 +10,28 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 $org_id = NULL;
+$search = '';
 class Resultados_Resiliencia_Table extends WP_List_Table {
+
+	public function __construct($search_string ='', $hash) {
+		global $org_id;
+		global $search;
+		$org_id = $hash;
+		$search = $search_string;
+		parent::__construct( array(
+	   'singular'=> 'Registro', //Singular label
+	   'plural' => 'Registros', //plural label, also this well be one of the table css class
+	   'ajax'  => true //We won't support Ajax for this table
+	   ) );
+	}
 	 /**
      * Metodo para preparar la informacion de la tabla
      *
      * @return Void
      */
-    public function prepare_items($search ='', $hash) {
+    public function prepare_items() {
 		global $org_id;
-		$org_id = $hash;
+		global $search;
 		// Construir columnas
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();

@@ -104,11 +104,11 @@ function render_table_resultados($org_id) {
     print '<div id="poststuff">';
 
     print '<form method="post">';
-    $wp_list_table = new Resultados_Resiliencia_Table();
+    $wp_list_table = NULL;
     if( isset($_POST['s']) ){
-        $wp_list_table->prepare_items($_POST['s'], $org_id);
+        $wp_list_table = new Resultados_Resiliencia_Table($_POST['s'], $org_id);
     } else {
-        $wp_list_table->prepare_items(null, $org_id);
+        $wp_list_table = new Resultados_Resiliencia_Table(null, $org_id);
     }
     $wp_list_table->search_box( 'Buscar', 'search_id' ); 
     $wp_list_table->display();
