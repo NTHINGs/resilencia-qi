@@ -39,11 +39,17 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
             $preguntas = json_encode($wpdb->get_results(
             "SELECT * FROM $table_name"
             ));
+
+            $table_areas = $wpdb->prefix . "areasorgareas";
+            $areas = json_encode($wpdb->get_results(
+                "SELECT * FROM $table_areas WHERE organizacion = '{$_GET['org_id']}'"
+            ));
             $variables = array(
                 "%REQUEST_URI%",
                 "%PREGUNTAS%",
                 "%ORG_ID%",
-                "%ORG_NAME%"
+                "%ORG_NAME%",
+                "%AREAS%",
             );
             $organizacion = get_users(
                 array(
@@ -55,7 +61,8 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
                 $_GET['org_id'],
-                $organizacion
+                $organizacion,
+                $areas
             );
             echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/cuestionario-resiliencia.html" ));
         }
@@ -71,6 +78,7 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 'fechadenacimiento'  => date('Y-m-d', strtotime($_POST['fechadenacimiento'])),
                 'edad'               => $_POST['edad'],
                 'fechaaplicacion'    => current_time( 'mysql' ),
+                'area'               => $_POST['area'],
                 'organizacion'       => $_POST['organizacion'],
             );
             $wpdb->insert( $table_name, $values, array(

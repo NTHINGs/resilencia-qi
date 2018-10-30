@@ -9,14 +9,25 @@
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
-
+$search = '';
 class Orgs_Resiliencia_Table extends WP_List_Table {
+
+	public function __construct($search_string ='') {
+		global $search;
+		$search = $search_string;
+		parent::__construct( array(
+	   'singular'=> 'Registro', //Singular label
+	   'plural' => 'Registros', //plural label, also this well be one of the table css class
+	   'ajax'  => true //We won't support Ajax for this table
+	   ) );
+	}
 	 /**
      * Metodo para preparar la informacion de la tabla
      *
      * @return Void
      */
-    public function prepare_items($search ='') {
+    public function prepare_items() {
+		global $search;
 		// Construir columnas
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();
@@ -88,7 +99,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
      *
      * @return Array
      */
-    private function table_data($search='') {
+    private function table_data() {
 		global $wpdb;
 
 		if(!empty($search)){
@@ -117,24 +128,27 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 			return $data;
 		} else {
 			
-			$sql = "SELECT DISTINCT organizacion as id FROM {$wpdb->prefix}resiliencia_registros";
-
-			$data = $wpdb->get_results( $sql, 'ARRAY_A' );
-
-			foreach($data as $index => $row) {
-				$data[$index]['nombre'] = get_users(
-					array(
-						'role' => 'empresa',
-						'hash' => $row['id'],
-					)
-				)[0]->display_name;
-				$resultados = get_resultados_por_org($row['id']);
-				$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
-				$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
-				$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
-				$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
-				$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
-				$data[$index]['total'] = calcular_total($resultados);
+			$args = array(
+				'search'         => '*'.esc_attr( $search ).'*',
+				'search_columns' => array( 'display_name' )
+			);
+			$query = new WP_User_Query( $args );
+			$data = array();
+			$index = 0;
+			foreach ( $query->get_results() as $user ) {
+				$hash = get_user_meta($user->ID, 'hash', true);
+				if($hash) {
+					$data[$index]['nombre'] = $user->display_name;
+					$data[$index]['id'] = $hash;
+					$resultados = get_resultados_por_org($row['id']);
+					$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
+					$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
+					$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
+					$data[$index]['humor'] = calcular_rango('humor', (int)$resultados[3]);
+					$data[$index]['creatividad'] = calcular_rango('creatividad', (int)$resultados[4]);
+					$data[$index]['total'] = calcular_total($resultados);
+					$index++;
+				}
 			}
 			return $data;
 		}

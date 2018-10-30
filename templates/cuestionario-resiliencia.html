@@ -33,6 +33,11 @@
                     </span>
                     <input type="hidden" id="edad" name="edad">
                 </div>
+                <div class="form-group col-12">
+                    <label for="area">Área</label>
+                    <select class="form-control" name="area" id="area" required>
+                    </select>
+                </div>
                 <div class="col-12 pt-3">
                     <h3>Preguntas</h3>
                 </div>
@@ -84,6 +89,14 @@
 
             $('#edad').val(edad);
             $('#edad-span').html(edad);
+        });
+
+        var areas = JSON.parse('%AREAS%');
+        areas.forEach(function (area) {
+            $('#area').append($('<option>', {
+                value: area.nombre,
+                text: area.nombre
+            }));
         });
     });
 </script>

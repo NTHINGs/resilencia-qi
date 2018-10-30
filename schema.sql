@@ -22,6 +22,7 @@ CREATE TABLE %TABLE_PREFIX%registros
  fechadenacimiento DATE NOT NULL ,
  edad              INT NOT NULL ,
  fechaaplicacion   DATETIME NOT NULL ,
+ area              VARCHAR(100) NOT NULL
  organizacion      VARCHAR(64) NOT NULL,
 
 PRIMARY KEY (id)
