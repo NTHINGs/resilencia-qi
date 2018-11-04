@@ -101,12 +101,17 @@ function render_resiliencia_admin_org($org_id=NULL) {
             get_site_url(),
             $org_id,
         );
+        $area = NULL;
+        if( isset($_POST['area']) && $_POST['area'] != 'todas' ){
+            $area = $_POST['area'];
+        }
         ob_start();
         print str_replace($variables, $values, file_get_contents(  RES_PLUGIN_PATH . "templates/resultados-organizacion.html" ));
-        print do_shortcode('[resultados-cuestionario org_id="' . $org_id . '"]');
+        print $area;
+        print do_shortcode('[resultados-cuestionario org_id="' . $org_id . '" area="' . $area . '"]');
         print '</div>';
         print '<h2>Resultados</h2>';
-        render_table_resultados($org_id);
+        render_table_resultados($org_id, $area);
         ob_end_flush();
     } else {
         print 'ERROR ORG_ID NO ESTA DEFINIDO';
@@ -114,18 +119,41 @@ function render_resiliencia_admin_org($org_id=NULL) {
     
 }
 
-function render_table_resultados($org_id) {
+function render_table_resultados($org_id, $area = NULL) {
+    global $wpdb;
+    $table_areas = $wpdb->prefix . "areasorgareas";
+    $areas = $wpdb->get_results(
+        "SELECT * FROM $table_areas WHERE organizacion = '{$org_id}'",
+        'ARRAY_A'
+    );
     ob_start();
     // TODO: Agregar un combo o una opcion para traer resultados por area en la organizacion
     ?>
     <div id="poststuff">
         <form method="post">
+            <label for="area">Filtrar por área</label>                                                                                                                                                                                                                                                     
+            <select id="area" name="area">
+                <option value="todas">
+                    Todas
+                </option>
+                <?php
+                    foreach( $areas as $index => $row ) {
+                        print $row['nombre'];
+                        ?>
+                        <option value="<?php print $row['nombre']; ?>">
+                            <?php print $row['nombre']; ?>
+                        </option>
+                        <?php
+                    }
+                ?>
+            </select>
             <?php
+                submit_button('Filtrar');
                 $wp_list_table = NULL;
                 if( isset($_POST['s']) ){
-                    $wp_list_table = new Resultados_Resiliencia_Table($_POST['s'], $org_id);
+                    $wp_list_table = new Resultados_Resiliencia_Table($_POST['s'], $org_id, $area);
                 } else {
-                    $wp_list_table = new Resultados_Resiliencia_Table(null, $org_id);
+                    $wp_list_table = new Resultados_Resiliencia_Table(null, $org_id, $area);
                 }
                 $wp_list_table->prepare_items();
                 $wp_list_table->search_box( 'Buscar', 'search_id' ); 
@@ -133,6 +161,14 @@ function render_table_resultados($org_id) {
             ?>
         </form>
     </div>
+    <script>
+        var area = '<?php print $area; ?>' + '';
+        console.log(area);
+        if (area === '') {
+            area = 'todas';
+        }
+        document.getElementById("area").value = area;
+    </script>
     <?php
     ob_end_flush();
 }

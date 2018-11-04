@@ -11,13 +11,16 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 $org_id = NULL;
 $search = '';
+$area = NULL;
 class Resultados_Resiliencia_Table extends WP_List_Table {
 
-	public function __construct($search_string ='', $hash) {
+	public function __construct($search_string ='', $hash, $areaparam) {
 		global $org_id;
 		global $search;
+		global $area;
 		$org_id = $hash;
 		$search = $search_string;
+		$area = $areaparam;
 		parent::__construct( array(
 	   'singular'=> 'Registro', //Singular label
 	   'plural' => 'Registros', //plural label, also this well be one of the table css class
@@ -105,15 +108,18 @@ class Resultados_Resiliencia_Table extends WP_List_Table {
      * @return Array
      */
     private function table_data($search='') {
-		global $wpdb, $org_id;
+		global $wpdb, $org_id, $area;
 		$sql = "SELECT id, nombre, edad, fechaaplicacion FROM {$wpdb->prefix}resiliencia_registros WHERE organizacion = '{$org_id}'";
 		if(!empty($search)){
 			$sql .= " AND nombre LIKE '%{$search}%'";
 		}
+		if(!empty($area)) {
+			$sql .= " AND area = '{$area}'";
+		}
 
 		$data = $wpdb->get_results( $sql, 'ARRAY_A' );
 		foreach($data as $index => $row) {
-			$resultados = get_resultados($row['id']);
+			$resultados = get_resultados($row['id'], $area);
 			$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 			$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
 			$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);

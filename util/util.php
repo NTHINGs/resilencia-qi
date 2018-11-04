@@ -37,7 +37,7 @@ function get_user_hash() {
     return $hash;
 }
 
-function get_resultados($cuestionario_id) {
+function get_resultados($cuestionario_id, $area = NULL) {
     global $wpdb, $obj;
     $resultados = array();
 
@@ -52,6 +52,9 @@ function get_resultados($cuestionario_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
+            if ($area != NULL) {
+                $sql .= " AND R.area = '{$area}'";
+            }
             $resultado += (int)$wpdb->get_var($sql);
         }
         array_push($resultados, $resultado);
@@ -60,7 +63,7 @@ function get_resultados($cuestionario_id) {
     return $resultados;
 }
 
-function get_resultados_por_org($org_id) {
+function get_resultados_por_org($org_id, $area = NULL) {
     global $wpdb, $obj;
     $resultados = array();
 
@@ -76,6 +79,9 @@ function get_resultados_por_org($org_id) {
                     AND P.tipo = '{$tipo}'
                     AND P.grupo = '{$grupo}'
                     AND RS.respuesta = '{$respuesta}'";
+            if ($area != NULL) {
+                $sql .= " AND R.area = '{$area}'";
+            }
             $resultado += (int)$wpdb->get_var($sql);
             $contador += 1;
         }
@@ -94,8 +100,8 @@ function calcular_rango($grupo, $puntaje) {
                 'inf' => 9,
             ),
             'Medio' => array(
-                'sup' => 6,
-                'inf' => 8,
+                'sup' => 8,
+                'inf' => 6,
             ),
             'Bajo' => array(
                 'sup' => 5,

@@ -116,6 +116,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 					$data[$index]['nombre'] = $user->display_name;
 					$data[$index]['id'] = $hash;
 					$resultados = get_resultados_por_org($hash);
+					print $resultados;
 					$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 					$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
 					$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
@@ -140,7 +141,7 @@ class Orgs_Resiliencia_Table extends WP_List_Table {
 				if($hash) {
 					$data[$index]['nombre'] = $user->display_name;
 					$data[$index]['id'] = $hash;
-					$resultados = get_resultados_por_org($row['id']);
+					$resultados = get_resultados_por_org($hash);
 					$data[$index]['autoestima'] = calcular_rango('autoestima', (int)$resultados[0]);
 					$data[$index]['empatia'] =  calcular_rango('empatia', (int)$resultados[1]);
 					$data[$index]['autonomia'] = calcular_rango('autonomia', (int)$resultados[2]);
