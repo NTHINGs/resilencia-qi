@@ -91,13 +91,21 @@ function render_resiliencia_admin_org($org_id=NULL) {
             "%SITE_URL%",
             "%HASH%",
         );
+
+        $args = array(
+            'search'         => '**',
+            'search_columns' => array( 'display_name' )
+        );
+        $query = new WP_User_Query( $args );
+        $usuario = null;
+        foreach ( $query->get_results() as $user ) {
+            $hash = get_user_meta($user->ID, 'hash', true);
+            if ($hash == $org_id) {
+                $usuario = $user->display_name;
+            }
+        }
         $values = array(
-            get_users(
-                array(
-                    'role' => 'empresa',
-                    'hash' => $org_id,
-                )
-            )[0]->display_name,
+            $usuario,
             get_site_url(),
             $org_id,
         );
@@ -138,7 +146,6 @@ function render_table_resultados($org_id, $area = NULL) {
                 </option>
                 <?php
                     foreach( $areas as $index => $row ) {
-                        print $row['nombre'];
                         ?>
                         <option value="<?php print $row['nombre']; ?>">
                             <?php print $row['nombre']; ?>
@@ -163,7 +170,6 @@ function render_table_resultados($org_id, $area = NULL) {
     </div>
     <script>
         var area = '<?php print $area; ?>' + '';
-        console.log(area);
         if (area === '') {
             area = 'todas';
         }

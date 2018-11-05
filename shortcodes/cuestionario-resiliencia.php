@@ -51,12 +51,18 @@ if ( ! function_exists( 'cuestionario_resiliencia_shortcode' ) ) {
                 "%ORG_NAME%",
                 "%AREAS%",
             );
-            $organizacion = get_users(
-                array(
-                    'role' => 'empresa',
-                    'hash' => $_GET['org_id'],
-                )
-            )[0]->display_name;
+            $args = array(
+                'search'         => '**',
+                'search_columns' => array( 'display_name' )
+            );
+            $query = new WP_User_Query( $args );
+            $organizacion = null;
+            foreach ( $query->get_results() as $user ) {
+                $hash = get_user_meta($user->ID, 'hash', true);
+                if ($hash == $_GET['org_id']) {
+                    $organizacion = $user->display_name;
+                }
+            }
             $values = array(
                 esc_url( $_SERVER['REQUEST_URI'] ),
                 $preguntas,
