@@ -83,7 +83,7 @@ function get_resultados_por_org($org_id, $area = NULL) {
                 $sql .= " AND R.area = '{$area}'";
             }
             $resultado += (int)$wpdb->get_var($sql);
-            $contador += 1;
+            $contador += 0.5;
         }
         $promedio = $resultado / $contador;
         array_push($resultados, $promedio);
