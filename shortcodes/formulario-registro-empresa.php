@@ -12,7 +12,20 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
 	add_action( 'plugins_loaded', function() {
 		// Add the shortcode.
 		add_shortcode( 'formulario-registro-empresa', 'formulario_registro_empresa_shortcode' );
-	});
+    });
+    
+    add_action( 'wp_ajax_nopriv_qi_find_dup_email', 'qi_find_dup_email' );
+    add_action( 'wp_ajax_qi_find_dup_email', 'qi_find_dup_email' );
+
+    function qi_find_dup_email() {
+        $email = $_POST['email'];
+        if (!get_user_by('email', $email)) {
+            echo 'false';
+        } else {
+            echo 'true';
+        }
+        die();
+    }
 
 	/**
 	 * formulario-registro-empresa shortcode.
@@ -32,9 +45,11 @@ if ( ! function_exists( 'formulario_registro_empresa_shortcode' ) ) {
     function render_html_form() {
         $variables = array(
             "%REQUEST_URI%",
+            "%AJAX_URL%",
         );
         $values = array(
             esc_url( $_SERVER['REQUEST_URI'] ),
+            admin_url( 'admin-ajax.php' ),
         );
         echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/formulario-registro-empresa.html" ));
     }
