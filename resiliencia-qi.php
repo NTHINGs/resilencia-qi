@@ -49,9 +49,15 @@ if ( file_exists( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' ) )
 	require_once( RES_PLUGIN_PATH . 'shortcodes/resultados-cuestionario.php' );
 }
 
+if ( file_exists( RES_PLUGIN_PATH . 'util/services.php' ) ) {
+	require_once( RES_PLUGIN_PATH . 'util/services.php' );
+}
+
 if ( file_exists( RES_PLUGIN_PATH . 'admin-templates/admin-page.php' ) ) {
 	require_once( RES_PLUGIN_PATH . 'admin-templates/admin-page.php' );
 }
+
+
 
 add_action('wp_enqueue_scripts','resiliencia_qi_init');
 
@@ -69,6 +75,8 @@ add_action( 'admin_enqueue_scripts', 'resiliencia_qi_admin_init' );
 
 function resiliencia_qi_admin_init() {
 	wp_enqueue_script('chart', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js', array(), null, false);
+	wp_enqueue_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
+	wp_enqueue_script( 'jspdf-tables', plugins_url( '/js/jspdf.plugin.autotable.js', __FILE__ ));
 }
 
 // Crear Tablas en MySql

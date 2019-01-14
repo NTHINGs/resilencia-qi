@@ -135,7 +135,6 @@ function render_table_resultados($org_id, $area = NULL) {
         'ARRAY_A'
     );
     ob_start();
-    // TODO: Agregar un combo o una opcion para traer resultados por area en la organizacion
     ?>
     <div id="poststuff">
         <form method="post">
@@ -156,6 +155,9 @@ function render_table_resultados($org_id, $area = NULL) {
             </select>
             <?php
                 submit_button('Filtrar');
+            ?>
+            <button type="button" class="button button-primary" onclick="imprimir()">Imprimir</button>
+            <?php
                 $wp_list_table = NULL;
                 if( isset($_POST['s']) ){
                     $wp_list_table = new Resultados_Resiliencia_Table($_POST['s'], $org_id, $area);
@@ -174,6 +176,92 @@ function render_table_resultados($org_id, $area = NULL) {
             area = 'todas';
         }
         document.getElementById("area").value = area;
+
+        function getDataUri(url) {
+            if (url) {
+                return new Promise((resolve, reject) => {
+                    let extension = url.split('.').pop();
+                    let type = 'png';
+                    switch (extension) {
+                        case 'jpg':
+                        case 'jpeg':
+                            type = 'jpeg';
+                            break;
+                    }
+                    let image = new Image();
+
+                    image.onload = function () {
+                        let canvas = document.createElement('canvas');
+                        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+                        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+                        canvas.getContext('2d').drawImage(this, 0, 0);
+                        resolve(canvas.toDataURL('image/' + type));
+                    };
+
+                    image.src = url;
+                });
+            }
+        }
+
+        function imprimir() {
+            const data = new FormData();
+            data.append('action', 'resiliencia_imprimir_reporte_areas_general');
+            data.append('org_id', '<?php print $org_id; ?>');
+            data.append('search', '<?php print $_POST["s"]; ?>');
+            data.append('area', '<?php print $area; ?>');
+            const Http = new XMLHttpRequest();
+            const url="<?php print admin_url( 'admin-ajax.php' ); ?>";
+            Http.open("POST", url);
+            Http.send(data);
+            Http.onreadystatechange = function (e) {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = null;
+                    try {
+                        results = JSON.parse(Http.responseText);
+                        (async () => {
+                            let doc = new jsPDF({
+                                orientation: 'landscape',
+                                pageFormat: 'a4'
+                            });
+                            doc.autoTableSetDefaults({
+                                headStyles: {
+                                    fillColor: [80, 18, 70],
+                                    textColor: 255
+                                }
+                            });
+
+                            doc.addImage(await getDataUri('/wp-content/plugins/resiliencia-qi/logo.png'), 10, 10, 30, 20);
+                            doc.setFontSize(24);
+                            doc.text('Resultados Resiliencia', 45, 25);
+                            doc.autoTable({
+                                startY: 40,
+                                columns: [
+                                    {header: 'ID', dataKey: 'id'},
+                                    {header: 'Nombre', dataKey: 'nombre'},
+                                    {header: 'Autoestima', dataKey: 'autoestima'},
+                                    {header: 'Empatía', dataKey: 'empatia'},
+                                    {header: 'Autonomía', dataKey: 'autonomia'},
+                                    {header: 'Humor', dataKey: 'humor'},
+                                    {header: 'Creatividad', dataKey: 'creatividad'},
+                                    {header: 'Total', dataKey: 'total'},
+                                ],
+                                body: results,
+                                didParseCell: function(data) {
+                                    if(data.row.section === 'body' && data.column.dataKey !== 'id' && data.column.dataKey !== 'nombre' && data.column.dataKey !== 'total') {
+                                        const obj = data.cell.raw;
+                                        data.cell.text = obj.text;
+                                        data.cell.styles.textColor = obj.color;
+                                    }
+                                }
+                            });
+                            doc.save('resultados_resiliencia.pdf');
+                        })();
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+            };
+        }
     </script>
     <?php
     ob_end_flush();
